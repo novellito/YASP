@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const passport = require('passport');
 const helmet = require('helmet');
 const app = express();
-
+const PORT = 5000 || process.env.PORT;
 // import routes
 const localAuthRoutes = require('./routes/localAuth');
 const protectedRoutes = require('./routes/protected-routes');
@@ -34,6 +34,6 @@ app.use((err, req, res, next) => {
   res.status(500).send({ error: err.message });
 });
 
-app.listen(3000, () => {
-  console.log('Server started');
+app.listen(PORT, () => {
+  console.log(`Server started on port: ${PORT}`);
 });

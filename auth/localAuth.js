@@ -1,6 +1,6 @@
 const passport = require('passport');
 const localStrategy = require('passport-local').Strategy;
-const UserModel = require('../models/model');
+const UserModel = require('../models/User');
 const bcrypt = require('bcrypt');
 
 // Mote that you are able to send the data either via json or form-urlencoded
@@ -71,7 +71,7 @@ passport.use(
         // Send user to next middleware
         return done(null, token.user);
       } catch (error) {
-        done(error);
+        return done(error);
       }
     }
   )
