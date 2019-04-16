@@ -3,6 +3,11 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const app = express();
+
+// import routes
+const localAuthRoutes = require('./routes/localAuth');
+const protectedRoutes = require('./routes/protected-routes');
+
 mongoose.Promise = global.Promise;
 mongoose.connect(
   'mongodb://localhost:27017/passport-jwt',
@@ -15,12 +20,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(passport.initialize());
 
-const routes = require('./routes/routes');
-const secureRoute = require('./routes/secure-routes');
-
-app.use('/', routes);
-//We plugin our jwt strategy as a middleware so only verified users can access this route
-app.use('/user', passport.authenticate('jwt', { session: false }), secureRoute);
+app.use('/local', localAuthRoutes);
+app.use(
+  '/user',
+  passport.authenticate('jwt', { session: false }),
+  protectedRoutes
+);
 
 // Error handling middleware
 app.use((err, req, res, next) => {

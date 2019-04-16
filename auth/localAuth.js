@@ -31,8 +31,8 @@ passport.use(
   )
 );
 
-//Create a passport middleware to handle User login
-// Note first param is optional - will default to username & password if left out
+// Create a passport middleware to handle User login
+// Note first param of localStartegy is optional - will default to username & password if left out
 passport.use(
   'login',
   new localStrategy(
@@ -56,24 +56,19 @@ passport.use(
     }
   )
 );
+
 const JWTstrategy = require('passport-jwt').Strategy;
-//We use this to extract the JWT sent by the user
 const ExtractJWT = require('passport-jwt').ExtractJwt;
 
-//This verifies that the token sent by the user is valid
 passport.use(
   new JWTstrategy(
     {
-      //secret we used to sign our JWT
       secretOrKey: 'top_secret',
-      //we expect the user to send the token as a query paramater with the name 'secret_token'
       jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken()
-      // jwtFromRequest: ExtractJWT.fromUrlQueryParameter('secret_token')
     },
     async (token, done) => {
       try {
-        console.log(token);
-        //Pass the user details to the next middleware
+        // Send user to next middleware
         return done(null, token.user);
       } catch (error) {
         done(error);
