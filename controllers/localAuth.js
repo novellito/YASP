@@ -1,7 +1,24 @@
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
+const Joi = require('joi');
 
 let LocalAuthController = {};
+
+const registerBodySchema = Joi.object().keys({
+  email: Joi.string()
+    .email({ minDomainAtoms: 2 })
+    .required(),
+  password: Joi.string()
+    .min(4)
+    .required()
+});
+
+// We ensure that the incoming register body only comprises of an email and password!
+LocalAuthController.verifyRegisterBody = (req, res, next) => {
+  const { error } = Joi.validate(req.body, registerBodySchema);
+  if (error) return next(error);
+  next();
+};
 
 LocalAuthController.sendResponse = (req, res, next) => {
   res.json({

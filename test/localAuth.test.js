@@ -44,6 +44,23 @@ describe('Local Auth Suite', () => {
     return response;
   });
 
+  it('Should reject signup with a short password ', async () => {
+    const newUser = {
+      email: 'newUser@test.com',
+      password: 'foo'
+    };
+
+    const response = await chai
+      .request(app)
+      .post('/local/signup')
+      .send(newUser);
+
+    expect(response.statusCode).to.equal(500);
+    await UserModel.findOneAndDelete({ email: 'newUser@test.com' });
+
+    return response;
+  });
+
   it('Should log in the user', async () => {
     const response = await chai
       .request(app)
