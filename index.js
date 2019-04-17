@@ -7,6 +7,7 @@ const app = express();
 const PORT = 5000 || process.env.PORT;
 // import routes
 const localAuthRoutes = require('./routes/localAuth');
+const fbAuthRoutes = require('./routes/facebookAuth');
 const protectedRoutes = require('./routes/protected-routes');
 
 mongoose.Promise = global.Promise;
@@ -17,12 +18,14 @@ mongoose.connect(
 );
 
 require('./auth/localAuth');
+require('./auth/facebookAuth');
 app.use(helmet());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(passport.initialize());
 
 app.use('/local', localAuthRoutes);
+app.use('/facebook', fbAuthRoutes);
 app.use(
   '/user',
   passport.authenticate('jwt', { session: false }),
