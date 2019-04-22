@@ -36,7 +36,7 @@ LocalAuthController.handleLogin = (req, res, next) => {
         if (error) return next(error);
         // add the body to the jwt payload & sign token
         const body = { _id: user._id, email: user.email };
-        const token = jwt.sign({ user: body }, 'top_secret');
+        const token = jwt.sign({ user: body }, process.env.SECRET_ONE);
         return res.json({ token });
       });
     } catch (error) {

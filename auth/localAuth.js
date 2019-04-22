@@ -56,7 +56,7 @@ module.exports = (...dependencies) => {
   passport.use(
     new JWTstrategy(
       {
-        secretOrKey: 'top_secret',
+        secretOrKey: process.env.SECRET_ONE,
         jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken()
       },
       async (token, done) => {

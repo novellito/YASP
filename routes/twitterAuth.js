@@ -7,7 +7,7 @@ const controller = require('../controllers/socialAuth');
 router.use(
   '/',
   expressSession({
-    secret: 'super-secret',
+    secret: process.env.SECRET_ONE,
     resave: false,
     saveUninitialized: true
   })

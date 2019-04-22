@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const helmet = require('helmet');
+const redis = require('redis');
 const app = express();
 require('dotenv').config();
 const PORT = 5000 || process.env.PORT;
@@ -15,6 +16,13 @@ const protectedRoutes = require('./routes/protected-routes');
 
 // import services
 const UserService = require('./services/UserService');
+
+// Create Redis Client
+let client = redis.createClient();
+
+client.on('connect', function() {
+  console.log('Connected to Redis...');
+});
 
 mongoose.Promise = global.Promise;
 mongoose.connect(
