@@ -2,7 +2,7 @@ const express = require('express');
 const passport = require('passport');
 
 const router = express.Router();
-const controller = require('../controllers/facebookAuth');
+const controller = require('../controllers/socialAuth');
 
 router.get('/login', passport.authenticate('facebook', { scope: ['email'] }));
 

@@ -8,7 +8,11 @@ const PORT = 5000 || process.env.PORT;
 // import routes
 const localAuthRoutes = require('./routes/localAuth');
 const fbAuthRoutes = require('./routes/facebookAuth');
+const twitterAuthRoutes = require('./routes/twitterAuth');
 const protectedRoutes = require('./routes/protected-routes');
+
+// import services
+const UserService = require('./services/UserService');
 
 mongoose.Promise = global.Promise;
 mongoose.connect(
@@ -17,8 +21,9 @@ mongoose.connect(
   err => (err ? console.log(err) : console.log('Connected to DB!'))
 );
 
-require('./auth/localAuth');
-require('./auth/facebookAuth');
+require('./auth/localAuth')(passport, UserService);
+require('./auth/facebookAuth')(passport, UserService);
+require('./auth/twitterAuth')(passport, UserService);
 app.use(helmet());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -26,6 +31,7 @@ app.use(passport.initialize());
 
 app.use('/local', localAuthRoutes);
 app.use('/facebook', fbAuthRoutes);
+app.use('/twitter', twitterAuthRoutes);
 app.use(
   '/user',
   passport.authenticate('jwt', { session: false }),

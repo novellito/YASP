@@ -1,19 +1,18 @@
-const FacebookStrategy = require('passport-facebook').Strategy;
+const TwitterStrategy = require('passport-twitter').Strategy;
 const config = require('../config/config');
 
 module.exports = (...dependencies) => {
   const [passport, userSVC] = dependencies;
   passport.use(
-    'facebook',
-    new FacebookStrategy(
+    new TwitterStrategy(
       {
-        clientID: config.FACEBOOK_ID,
-        clientSecret: config.FACEBOOK_SECRET,
-        callbackURL: '/facebook/callback',
+        consumerKey: config.TWITTER_KEY,
+        consumerSecret: config.TWITTER_SECRET,
+        callbackURL: '/twitter/callback',
         passReqToCallback: true,
-        profileFields: ['emails']
+        includeEmail: true
       },
-      async (req, accessToken, refreshToken, profile, done) => {
+      async (req, token, tokenSecret, profile, done) => {
         try {
           const [email] = profile.emails;
 
