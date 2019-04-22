@@ -1,5 +1,4 @@
 const FacebookStrategy = require('passport-facebook').Strategy;
-const config = require('../config/config');
 
 module.exports = (...dependencies) => {
   const [passport, userSVC] = dependencies;
@@ -7,8 +6,8 @@ module.exports = (...dependencies) => {
     'facebook',
     new FacebookStrategy(
       {
-        clientID: config.FACEBOOK_ID,
-        clientSecret: config.FACEBOOK_SECRET,
+        clientID: process.env.FACEBOOK_CLIENT_ID,
+        clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
         callbackURL: '/facebook/callback',
         passReqToCallback: true,
         profileFields: ['emails']

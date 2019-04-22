@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const passport = require('passport');
 const helmet = require('helmet');
 const app = express();
+require('dotenv').config();
 const PORT = 5000 || process.env.PORT;
 // import routes
 const localAuthRoutes = require('./routes/localAuth');

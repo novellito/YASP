@@ -1,13 +1,12 @@
 const TwitterStrategy = require('passport-twitter').Strategy;
-const config = require('../config/config');
 
 module.exports = (...dependencies) => {
   const [passport, userSVC] = dependencies;
   passport.use(
     new TwitterStrategy(
       {
-        consumerKey: config.TWITTER_KEY,
-        consumerSecret: config.TWITTER_SECRET,
+        consumerKey: process.env.TWITTER_KEY,
+        consumerSecret: process.env.TWITTER_SECRET,
         callbackURL: '/twitter/callback',
         passReqToCallback: true,
         includeEmail: true
