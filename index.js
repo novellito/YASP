@@ -10,6 +10,7 @@ const PORT = 5000 || process.env.PORT;
 const localAuthRoutes = require('./routes/localAuth');
 const fbAuthRoutes = require('./routes/facebookAuth');
 const twitterAuthRoutes = require('./routes/twitterAuth');
+const googleAuthRoutes = require('./routes/googleAuth');
 const protectedRoutes = require('./routes/protected-routes');
 
 // import services
@@ -25,6 +26,7 @@ mongoose.connect(
 require('./auth/localAuth')(passport, UserService);
 require('./auth/facebookAuth')(passport, UserService);
 require('./auth/twitterAuth')(passport, UserService);
+require('./auth/googleAuth')(passport, UserService);
 app.use(helmet());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -33,6 +35,7 @@ app.use(passport.initialize());
 app.use('/local', localAuthRoutes);
 app.use('/facebook', fbAuthRoutes);
 app.use('/twitter', twitterAuthRoutes);
+app.use('/google', googleAuthRoutes);
 app.use(
   '/user',
   passport.authenticate('jwt', { session: false }),

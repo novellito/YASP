@@ -5,10 +5,10 @@ const httpMocks = require('node-mocks-http');
 const jwt = require('jsonwebtoken');
 const app = require('../index');
 const sinon = require('sinon');
-const controller = require('../controllers/facebookAuth');
+const controller = require('../controllers/socialAuth');
 chai.use(chaiHTTP);
 
-describe('Facebook Auth Suite', () => {
+describe('Socials Auth Suite', () => {
   it('Should call send response', done => {
     const req = httpMocks.createRequest();
     const res = httpMocks.createResponse();
