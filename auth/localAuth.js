@@ -18,8 +18,14 @@ module.exports = (...dependencies) => {
         try {
           const hash = await bcrypt.hash(password, 10);
           const user = await userSVC.addNewUserToDb(email, hash);
-
-          return done(null, user);
+          const { token, refreshToken } = userSVC.generateTokens(email);
+          const body = {
+            _id: user._id,
+            email: user.email,
+            token,
+            refreshToken
+          };
+          return done(null, body);
         } catch (err) {
           done(err);
         }
@@ -41,8 +47,14 @@ module.exports = (...dependencies) => {
           // verify the user creds & return error when invalid
           const { user, message } = await userSVC.loginUser(email, password);
           if (message) return done({ message }, false);
-
-          return done(null, user);
+          const { token, refreshToken } = userSVC.generateTokens(email);
+          const body = {
+            _id: user._id,
+            email: user.email,
+            token,
+            refreshToken
+          };
+          return done(null, body);
         } catch (err) {
           return done(err);
         }

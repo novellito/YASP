@@ -17,8 +17,9 @@ module.exports = (...dependencies) => {
           const [email] = profile.emails;
 
           const user = await userSVC.addNewUserToDb(email.value);
+          const { token, refreshToken } = userSVC.generateTokens(email.value);
 
-          req.body = user;
+          req.body = { user, token, refreshToken };
 
           done(null, user);
         } catch (err) {

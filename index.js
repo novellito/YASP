@@ -7,6 +7,8 @@ const redis = require('redis');
 const app = express();
 require('dotenv').config();
 const PORT = 5000 || process.env.PORT;
+const client = redis.createClient();
+
 // import routes
 const localAuthRoutes = require('./routes/localAuth');
 const fbAuthRoutes = require('./routes/facebookAuth');
@@ -15,10 +17,7 @@ const googleAuthRoutes = require('./routes/googleAuth');
 const protectedRoutes = require('./routes/protected-routes');
 
 // import services
-const UserService = require('./services/UserService');
-
-// Create Redis Client
-let client = redis.createClient();
+const UserService = require('./services/UserService')(client);
 
 client.on('connect', function() {
   console.log('Connected to Redis...');
