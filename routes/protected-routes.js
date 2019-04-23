@@ -4,4 +4,6 @@ const controller = require('../controllers/protected-routes');
 
 router.get('/profile', controller.sendResponse);
 
+router.post('/token', controller.getNewTokens);
+
 module.exports = router;

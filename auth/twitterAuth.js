@@ -1,7 +1,8 @@
 const TwitterStrategy = require('passport-twitter').Strategy;
+const userSVC = require('../services/UserService');
 
 module.exports = (...dependencies) => {
-  const [passport, userSVC] = dependencies;
+  const [passport] = dependencies;
   passport.use(
     new TwitterStrategy(
       {

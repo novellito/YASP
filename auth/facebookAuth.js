@@ -1,7 +1,8 @@
 const FacebookStrategy = require('passport-facebook').Strategy;
+const userSVC = require('../services/UserService');
 
 module.exports = (...dependencies) => {
-  const [passport, userSVC] = dependencies;
+  const [passport] = dependencies;
   passport.use(
     'facebook',
     new FacebookStrategy(

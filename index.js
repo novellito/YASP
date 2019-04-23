@@ -1,13 +1,11 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const helmet = require('helmet');
-const redis = require('redis');
 const app = express();
-require('dotenv').config();
 const PORT = 5000 || process.env.PORT;
-const client = redis.createClient();
 
 // import routes
 const localAuthRoutes = require('./routes/localAuth');
@@ -16,13 +14,6 @@ const twitterAuthRoutes = require('./routes/twitterAuth');
 const googleAuthRoutes = require('./routes/googleAuth');
 const protectedRoutes = require('./routes/protected-routes');
 
-// import services
-const UserService = require('./services/UserService')(client);
-
-client.on('connect', function() {
-  console.log('Connected to Redis...');
-});
-
 mongoose.Promise = global.Promise;
 mongoose.connect(
   'mongodb://localhost:27017/passport-jwt',
@@ -30,10 +21,10 @@ mongoose.connect(
   err => (err ? console.log(err) : console.log('Connected to DB!'))
 );
 
-require('./auth/localAuth')(passport, UserService);
-require('./auth/facebookAuth')(passport, UserService);
-require('./auth/twitterAuth')(passport, UserService);
-require('./auth/googleAuth')(passport, UserService);
+require('./auth/localAuth')(passport);
+require('./auth/facebookAuth')(passport);
+require('./auth/twitterAuth')(passport);
+require('./auth/googleAuth')(passport);
 app.use(helmet());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));

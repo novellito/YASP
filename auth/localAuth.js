@@ -1,8 +1,9 @@
 const localStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcrypt');
+const userSVC = require('../services/UserService');
 
 module.exports = (...dependencies) => {
-  const [passport, userSVC] = dependencies;
+  const [passport] = dependencies;
 
   // Mote that you are able to send the data either via json or form-urlencoded
   // Will need to setup json body parser middleware if you send as json
@@ -74,7 +75,8 @@ module.exports = (...dependencies) => {
       async (token, done) => {
         try {
           // Send user to next middleware
-          return done(null, token.user);
+          console.log(token);
+          return done(null, token.email);
         } catch (error) {
           return done(error);
         }

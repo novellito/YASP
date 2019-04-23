@@ -1,10 +1,12 @@
 const UserModel = require('../models/User');
 const jwt = require('jsonwebtoken');
-class UserService {
-  constructor(client) {
-    this.client = client;
-    console.log('cleit');
-  }
+const redis = require('redis');
+const client = redis.createClient();
+client.on('connect', function() {
+  console.log('Connected to Redis...');
+});
+
+module.exports = new class UserService {
   async addNewUserToDb(email, password) {
     const existingUser = await UserModel.findOne({ email });
     if (existingUser) throw new Error('User already exists!');
@@ -14,6 +16,7 @@ class UserService {
 
     return user.save();
   }
+
   async loginUser(email, password) {
     const user = await UserModel.findOne({ email });
     if (!user) return { message: 'User not found' };
@@ -23,13 +26,15 @@ class UserService {
 
     return { user };
   }
+
   generateTokens(email) {
     const token = jwt.sign({ email }, process.env.SECRET_ONE);
     const refreshToken = jwt.sign({ email }, process.env.SECRET_ONE);
 
-    this.client.hmset(refreshToken, ['email', email, 'jwt', token]);
+    client.hmset(refreshToken, ['email', email, 'jwt', token]);
     return { token, refreshToken };
   }
-}
+}();
 
-module.exports = client => new UserService(client);
+// module.exports = () => new UserService();
+// module.exports = client => new UserService(client);

@@ -1,7 +1,8 @@
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+const userSVC = require('../services/UserService');
 
 module.exports = (...dependencies) => {
-  const [passport, userSVC] = dependencies;
+  const [passport] = dependencies;
   passport.use(
     new GoogleStrategy(
       {
