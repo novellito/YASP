@@ -66,7 +66,9 @@ module.exports = (...dependencies) => {
   const JWTstrategy = require('passport-jwt').Strategy;
   const ExtractJWT = require('passport-jwt').ExtractJwt;
 
+  // Use for accessing resources!
   passport.use(
+    'resources',
     new JWTstrategy(
       {
         secretOrKey: process.env.SECRET_ONE,
@@ -75,6 +77,28 @@ module.exports = (...dependencies) => {
       async (token, done) => {
         try {
           // Send user to next middleware
+          console.log('tokenator');
+          console.log(token);
+          return done(null, token.email);
+        } catch (error) {
+          return done(error);
+        }
+      }
+    )
+  );
+  // Use when requesting new token/ deleting refresh token
+  passport.use(
+    'token',
+    new JWTstrategy(
+      {
+        secretOrKey: process.env.SECRET_TWO,
+        jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken()
+      },
+      async (token, done) => {
+        try {
+          // Send user to next middleware
+          console.log('tokenator222');
+          console.log(token);
           return done(null, token.email);
         } catch (error) {
           return done(error);

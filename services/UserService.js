@@ -41,6 +41,13 @@ module.exports = new class UserService {
   deleteTokenRecord(oldToken) {
     client.del(oldToken);
   }
+  // Ensure that the refresh token matches up with the email provided
+  validateRefreshToken(token, cb) {
+    client.hgetall(token, (err, obj) => {
+      if (err) console.log('err', err);
+      cb(obj);
+    });
+  }
 }();
 
 // module.exports = () => new UserService();

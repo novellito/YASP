@@ -11,14 +11,19 @@ ProtectedRoutesController.sendResponse = (req, res, next) => {
   });
 };
 
-// When retrieving new tokens, we delete the old record, generate a new set
+// When retrieving new tokens, first validate that the refresh token associated email matches
+// with the given email and then we delete the old record, generate a new set of tokens
 // and send it back to the client
 ProtectedRoutesController.getNewTokens = (req, res, next) => {
-  const oldRefreshToken = req.headers.authorization.split(' ')[1];
-  userSVC.deleteTokenRecord(oldRefreshToken);
   const { email } = req.body;
-  const { token, refreshToken } = userSVC.generateTokens(email);
-  res.send({ token, refreshToken });
+  const oldRefreshToken = req.headers.authorization.split(' ')[1];
+  userSVC.validateRefreshToken(oldRefreshToken, obj => {
+    if (!obj || obj.email !== email)
+      return res.status(403).send({ message: 'Invalid Credentials!' });
+    userSVC.deleteTokenRecord(oldRefreshToken);
+    const { token, refreshToken } = userSVC.generateTokens(email);
+    res.status(200).send({ token, refreshToken });
+  });
 };
 // Delete the refresh token
 ProtectedRoutesController.deleteToken = (req, res, next) => {

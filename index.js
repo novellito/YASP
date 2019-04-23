@@ -13,6 +13,7 @@ const fbAuthRoutes = require('./routes/facebookAuth');
 const twitterAuthRoutes = require('./routes/twitterAuth');
 const googleAuthRoutes = require('./routes/googleAuth');
 const protectedRoutes = require('./routes/protected-routes');
+const tokenRoutes = require('./routes/tokenRoutes');
 
 mongoose.Promise = global.Promise;
 mongoose.connect(
@@ -36,8 +37,13 @@ app.use('/twitter', twitterAuthRoutes);
 app.use('/google', googleAuthRoutes);
 app.use(
   '/user',
-  passport.authenticate('jwt', { session: false }),
+  passport.authenticate('resources', { session: false }),
   protectedRoutes
+);
+app.use(
+  '/token',
+  passport.authenticate('token', { session: false }),
+  tokenRoutes
 );
 
 // Error handling middleware
