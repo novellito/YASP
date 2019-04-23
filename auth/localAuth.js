@@ -75,7 +75,6 @@ module.exports = (...dependencies) => {
       async (token, done) => {
         try {
           // Send user to next middleware
-          console.log(token);
           return done(null, token.email);
         } catch (error) {
           return done(error);

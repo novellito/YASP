@@ -7,6 +7,9 @@ client.on('connect', function() {
 });
 
 module.exports = new class UserService {
+  constructor() {
+    console.log('foobar');
+  }
   async addNewUserToDb(email, password) {
     const existingUser = await UserModel.findOne({ email });
     if (existingUser) throw new Error('User already exists!');
@@ -29,10 +32,14 @@ module.exports = new class UserService {
 
   generateTokens(email) {
     const token = jwt.sign({ email }, process.env.SECRET_ONE);
-    const refreshToken = jwt.sign({ email }, process.env.SECRET_ONE);
+    const refreshToken = jwt.sign({ email }, process.env.SECRET_TWO);
 
     client.hmset(refreshToken, ['email', email, 'jwt', token]);
     return { token, refreshToken };
+  }
+
+  deleteTokenRecord(oldToken) {
+    client.del(oldToken);
   }
 }();
 
