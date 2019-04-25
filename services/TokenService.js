@@ -10,7 +10,10 @@ module.exports = new class TokenService {
     console.log('token bar');
   }
   generateTokens(email) {
-    const token = jwt.sign({ email }, process.env.SECRET_ONE);
+    const token = jwt.sign({ email }, process.env.SECRET_ONE, {
+      expiresIn: '10s'
+    });
+    // const token = jwt.sign({ email }, process.env.SECRET_ONE, { expiresIn: '30m' });
     const refreshToken = jwt.sign({ email }, process.env.SECRET_TWO);
 
     client.hmset(refreshToken, ['email', email, 'jwt', token]);
