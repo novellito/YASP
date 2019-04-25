@@ -1,5 +1,6 @@
 const FacebookStrategy = require('passport-facebook').Strategy;
 const userSVC = require('../services/UserService');
+const tokenSVC = require('../services/TokenService');
 
 module.exports = (...dependencies) => {
   const [passport] = dependencies;
@@ -18,7 +19,7 @@ module.exports = (...dependencies) => {
           const [email] = profile.emails;
 
           const user = await userSVC.addNewUserToDb(email.value);
-          const { token, refreshToken } = userSVC.generateTokens(email.value);
+          const { token, refreshToken } = tokenSVC.generateTokens(email.value);
 
           req.body = { user, token, refreshToken };
 

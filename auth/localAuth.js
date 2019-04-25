@@ -1,6 +1,7 @@
 const localStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcrypt');
 const userSVC = require('../services/UserService');
+const tokenSVC = require('../services/TokenService')
 
 module.exports = (...dependencies) => {
   const [passport] = dependencies;
@@ -19,7 +20,7 @@ module.exports = (...dependencies) => {
         try {
           const hash = await bcrypt.hash(password, 10);
           const user = await userSVC.addNewUserToDb(email, hash);
-          const { token, refreshToken } = userSVC.generateTokens(email);
+          const { token, refreshToken } = tokenSVC.generateTokens(email);
           const body = {
             _id: user._id,
             email: user.email,
@@ -48,7 +49,7 @@ module.exports = (...dependencies) => {
           // verify the user creds & return error when invalid
           const { user, message } = await userSVC.loginUser(email, password);
           if (message) return done({ message }, false);
-          const { token, refreshToken } = userSVC.generateTokens(email);
+          const { token, refreshToken } = tokenSVC.generateTokens(email);
           const body = {
             _id: user._id,
             email: user.email,
