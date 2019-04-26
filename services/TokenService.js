@@ -6,9 +6,6 @@ client.on('connect', function() {
 });
 
 module.exports = new class TokenService {
-  constructor() {
-    console.log('token bar');
-  }
   generateTokens(email) {
     const token = jwt.sign({ email }, process.env.SECRET_ONE, {
       expiresIn: '10s'
@@ -23,6 +20,7 @@ module.exports = new class TokenService {
   deleteTokenRecord(oldToken) {
     client.del(oldToken);
   }
+
   // Ensure that the refresh token matches up with the email provided
   validateRefreshToken(token, cb) {
     client.hgetall(token, (err, obj) => {

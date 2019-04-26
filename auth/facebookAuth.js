@@ -22,7 +22,6 @@ module.exports = (...dependencies) => {
           const { token, refreshToken } = tokenSVC.generateTokens(email.value);
 
           req.body = { user, token, refreshToken };
-
           done(null, user);
         } catch (err) {
           done(err);

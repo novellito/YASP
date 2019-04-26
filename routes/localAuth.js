@@ -1,6 +1,5 @@
 const express = require('express');
 const passport = require('passport');
-
 const router = express.Router();
 const controller = require('../controllers/localAuth');
 
@@ -11,6 +10,7 @@ router.post(
   passport.authenticate('signup', { session: false }),
   controller.sendResponse
 );
+
 router.post('/login', controller.handleLogin);
 
 module.exports = router;
