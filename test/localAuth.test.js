@@ -6,6 +6,8 @@ const jwt = require('jsonwebtoken');
 const app = require('../index');
 const UserModel = require('../models/User');
 const bcrypt = require('bcrypt');
+const controller = require('../controllers/localAuth');
+const sinon = require('sinon');
 chai.use(chaiHTTP);
 
 describe('Local Auth Suite', () => {
@@ -68,13 +70,16 @@ describe('Local Auth Suite', () => {
       .send(creds);
 
     expect(response.statusCode).to.equal(200);
-    expect(response.body.token).to.exist;
+    expect(response.body.user.token).to.exist;
+    expect(response.body.user.refreshToken).to.exist;
     return response;
   });
 
   it('Should access the protected route', async () => {
-    const body = { _id: user._id, email: user.email };
-    const token = jwt.sign({ user: body }, 'top_secret');
+    const token = jwt.sign(
+      { _id: user._id, email: user.email },
+      'super-secret'
+    );
 
     const response = await chai
       .request(app)
@@ -86,5 +91,24 @@ describe('Local Auth Suite', () => {
     expect(response.body.token).to.exist;
     expect(response.body.msg).to.equal('This route is protected!');
     return response;
+  });
+
+  it('should verify the register body', () => {
+    const req = httpMocks.createRequest();
+    const res = httpMocks.createResponse();
+    const next = sinon.fake();
+    const spy = sinon.spy(controller.verifyRegisterBody);
+    spy(req, res, next);
+    expect(next.called).to.be.true;
+  });
+
+  it('should reject a body with no content', () => {
+    const req = httpMocks.createRequest();
+    const res = httpMocks.createResponse();
+    const next = err => {
+      expect(err).to.exist;
+    };
+    const spy = sinon.spy(controller.verifyRegisterBody);
+    spy(req, res, next);
   });
 });

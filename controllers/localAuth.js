@@ -1,7 +1,7 @@
 const passport = require('passport');
 const Joi = require('joi');
 
-let LocalAuthController = {};
+const LocalAuthController = {};
 
 const registerBodySchema = Joi.object().keys({
   email: Joi.string()
@@ -19,7 +19,7 @@ LocalAuthController.verifyRegisterBody = (req, res, next) => {
   next();
 };
 
-LocalAuthController.sendResponse = (req, res, next) => {
+LocalAuthController.sendResponse = (req, res) => {
   res.json({
     message: 'Signup successful',
     user: req.user

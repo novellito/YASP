@@ -1,7 +1,7 @@
 const localStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcrypt');
 const userSVC = require('../services/UserService');
-const tokenSVC = require('../services/TokenService')
+const tokenSVC = require('../services/TokenService');
 
 module.exports = (...dependencies) => {
   const [passport] = dependencies;
@@ -78,8 +78,6 @@ module.exports = (...dependencies) => {
       async (token, done) => {
         try {
           // Send user to next middleware
-          console.log('tokenator');
-          console.log(token);
           return done(null, token.email);
         } catch (error) {
           return done(error);

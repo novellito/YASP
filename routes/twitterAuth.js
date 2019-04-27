@@ -1,8 +1,9 @@
 const express = require('express');
 const passport = require('passport');
 const expressSession = require('express-session');
-const router = express.Router();
 const controller = require('../controllers/socialAuth');
+
+const router = express.Router();
 
 router.use(
   '/',

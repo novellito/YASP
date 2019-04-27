@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const helmet = require('helmet');
+
 const app = express();
 const PORT = 5000 || process.env.PORT;
 
@@ -26,6 +27,7 @@ require('./auth/localAuth')(passport);
 require('./auth/facebookAuth')(passport);
 require('./auth/twitterAuth')(passport);
 require('./auth/googleAuth')(passport);
+
 app.use(helmet());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));

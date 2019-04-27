@@ -1,6 +1,7 @@
 const express = require('express');
-const router = express.Router();
 const controller = require('../controllers/protected-routes');
+
+const router = express.Router();
 
 router.post('/', controller.getNewTokens);
 router.delete('/', controller.deleteToken);

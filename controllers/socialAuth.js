@@ -1,4 +1,4 @@
-let SocialsController = {};
+const SocialsController = {};
 
 SocialsController.sendResponse = (req, res) => {
   const { user, token, refreshToken } = req.body;
