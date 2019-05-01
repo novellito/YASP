@@ -6,7 +6,7 @@ client.on('connect', function() {
   console.log('Connected to Redis...');
 });
 
-module.exports = new class TokenService {
+module.exports = new (class TokenService {
   generateTokens(email) {
     const token = jwt.sign({ email }, process.env.SECRET_ONE, {
       expiresIn: '10s'
@@ -29,4 +29,4 @@ module.exports = new class TokenService {
       cb(obj);
     });
   }
-}();
+})();

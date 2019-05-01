@@ -16,7 +16,6 @@ ProtectedRoutesController.sendResponse = (req, res) => {
 ProtectedRoutesController.getNewTokens = (req, res) => {
   const { email } = req.body;
   const oldRefreshToken = req.headers.authorization.split(' ')[1];
-
   tokenSVC.validateRefreshToken(oldRefreshToken, obj => {
     if (!obj || obj.email !== email) {
       return res.status(403).send({ message: 'Invalid Credentials!' });
