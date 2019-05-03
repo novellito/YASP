@@ -1,12 +1,16 @@
 const jwt = require('jsonwebtoken');
 const redis = require('redis');
 
-const client = redis.createClient();
-client.on('connect', function() {
-  console.log('Connected to Redis...');
-});
-
 module.exports = new (class TokenService {
+  constructor() {
+    this.client = redis.createClient();
+    this.client.on('connect', function() {
+      console.log('Connected to Redis..');
+    });
+    this.generateTokens = this.generateTokens.bind(this);
+    this.deleteTokenRecord = this.deleteTokenRecord.bind(this);
+    this.validateRefreshToken = this.validateRefreshToken.bind(this);
+  }
   generateTokens(email) {
     const token = jwt.sign({ email }, process.env.SECRET_ONE, {
       expiresIn: '10s'
@@ -14,17 +18,17 @@ module.exports = new (class TokenService {
     // const token = jwt.sign({ email }, process.env.SECRET_ONE, { expiresIn: '30m' });
     const refreshToken = jwt.sign({ email }, process.env.SECRET_TWO);
 
-    client.hmset(refreshToken, ['email', email, 'jwt', token]);
+    this.client.hmset(refreshToken, ['email', email, 'jwt', token]);
     return { token, refreshToken };
   }
 
   deleteTokenRecord(oldToken) {
-    client.del(oldToken);
+    this.client.del(oldToken);
   }
 
   // Ensure that the refresh token matches up with the email provided
   validateRefreshToken(token, cb) {
-    client.hgetall(token, (err, obj) => {
+    this.client.hgetall(token, (err, obj) => {
       if (err) console.log('err', err);
       cb(obj);
     });
