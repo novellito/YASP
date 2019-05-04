@@ -16,6 +16,7 @@ describe('Local Auth Suite', () => {
     email: 'testUser@test.com',
     password: 'password123'
   };
+
   beforeEach(async () => {
     const hash = await bcrypt.hash('password123', 10);
     user = new UserModel({
@@ -24,6 +25,7 @@ describe('Local Auth Suite', () => {
     });
     user.save();
   });
+
   afterEach(async () => {
     await UserModel.findOneAndDelete({ email: 'testUser@test.com' });
   });
@@ -72,6 +74,7 @@ describe('Local Auth Suite', () => {
     expect(response.statusCode).to.equal(200);
     expect(response.body.user.token).to.exist;
     expect(response.body.user.refreshToken).to.exist;
+
     return response;
   });
 
@@ -90,6 +93,7 @@ describe('Local Auth Suite', () => {
     expect(response.statusCode).to.equal(200);
     expect(response.body.token).to.exist;
     expect(response.body.msg).to.equal('This route is protected!');
+
     return response;
   });
 

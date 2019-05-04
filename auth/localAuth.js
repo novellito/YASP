@@ -1,4 +1,6 @@
 const localStrategy = require('passport-local').Strategy;
+const JWTstrategy = require('passport-jwt').Strategy;
+const ExtractJWT = require('passport-jwt').ExtractJwt;
 const bcrypt = require('bcrypt');
 const userSVC = require('../services/UserService');
 const tokenSVC = require('../services/TokenService');
@@ -64,9 +66,6 @@ module.exports = (...dependencies) => {
     )
   );
 
-  const JWTstrategy = require('passport-jwt').Strategy;
-  const ExtractJWT = require('passport-jwt').ExtractJwt;
-
   // Use for accessing resources!
   passport.use(
     'resources',
@@ -85,6 +84,7 @@ module.exports = (...dependencies) => {
       }
     )
   );
+
   // Use when requesting new token/ deleting refresh token
   passport.use(
     'token',
@@ -96,8 +96,6 @@ module.exports = (...dependencies) => {
       async (token, done) => {
         try {
           // Send user to next middleware
-          console.log('tokenator222');
-          console.log(token);
           return done(null, token.email);
         } catch (error) {
           return done(error);

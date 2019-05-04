@@ -3,8 +3,9 @@ const expect = chai.expect;
 const chaiHTTP = require('chai-http');
 const sinon = require('sinon');
 const tokenSVC = require('../services/TokenService');
-chai.use(chaiHTTP);
 const redis = require('redis-mock');
+
+chai.use(chaiHTTP);
 client = redis.createClient();
 
 describe('Token Service Suite', () => {
