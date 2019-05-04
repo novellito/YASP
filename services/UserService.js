@@ -1,6 +1,6 @@
 const UserModel = require('../models/User');
 
-module.exports = new class UserService {
+module.exports = new (class UserService {
   async addNewUserToDb(email, password) {
     const existingUser = await UserModel.findOne({ email });
     if (existingUser) throw new Error('User already exists!');
@@ -20,4 +20,4 @@ module.exports = new class UserService {
 
     return { user };
   }
-}();
+})();
