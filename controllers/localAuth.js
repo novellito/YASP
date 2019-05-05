@@ -1,11 +1,11 @@
 const passport = require('passport');
-const Joi = require('joi');
+const Joi = require('@hapi/joi');
 
 const LocalAuthController = {};
 
 const registerBodySchema = Joi.object().keys({
   email: Joi.string()
-    .email({ minDomainAtoms: 2 })
+    .email({ minDomainSegments: 2 })
     .required(),
   password: Joi.string()
     .min(4)
