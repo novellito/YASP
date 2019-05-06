@@ -14,7 +14,7 @@ export default class Login extends React.Component {
   handleSubmit = async () => {
     try {
       const { data } = await axios.post(
-        '/local/signup',
+        '/api/local/signup',
 
         {
           email: this.state.username,

@@ -20,6 +20,8 @@ It uses a JWT authentication flow with refresh tokens.
 
 ## App Structure
 
+## Server 📁
+
 ⭐️ Index.js - Entry point of the app
 
 📁 Auth - Contains logic for the various authentication strategies.
@@ -43,7 +45,7 @@ It uses a JWT authentication flow with refresh tokens.
 
 📁 Services - Classes that hold utility methods which are used throughout the application.
 
-📁 Tests - Contains test suites for the different parts of the app.
+📁 Test - Contains test suites for the different parts of the app.
 
 # Running the app
 
