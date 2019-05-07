@@ -12,7 +12,7 @@ A boilerplate project made to help you get up and running with apps that require
 
 ## Features
 
-- Next.js configured with Redux, Jest, and Sass
+- Next.js configured with Redux, Jest, Sass, and Express
 
 Support for the following authentication strategies using [passport.js](http://www.passportjs.org/).
 
@@ -66,13 +66,17 @@ Support for the following authentication strategies using [passport.js](http://w
 
 # Running the app
 
-Clone the repo & run `npm install`
+Clone the repo & run `npm install` at the root directory and in the server directory.
 
 ## Via local
 
 You will need to have redis and mongodb running locally.
 
-After those are up and running, either use `node index.js` or `nodemon`
+After those are up and running, run the commands:
+
+From the server directory you can use either `nodemon` or `npm run server`
+
+From the server directory you can use either `nodemon` or `npm run dev`
 
 To run tests, run `npm run test-watch`
 
@@ -81,3 +85,10 @@ To run tests, run `npm run test-watch`
 You will need to have Docker set up.
 
 After Docker is up and running, use `docker-compose up --build`
+
+## Running Tests
+
+Client Tests - `npm test`
+Server Tests - `npm test` or `npm run test-watch`
+
+## Deployment (Coming soon!)
