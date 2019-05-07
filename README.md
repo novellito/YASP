@@ -93,6 +93,7 @@ After Docker is up and running, use `docker-compose up --build`
 ## Running Tests
 
 Client Tests - `npm test`
+
 Server Tests - `npm test` or `npm run test-watch`
 
 ## Deployment (Coming soon!)
