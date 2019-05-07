@@ -12,14 +12,15 @@ A boilerplate project made to help you get up and running with apps that require
 
 ## Features
 
-- Next.js configured with Redux, Jest, Sass, and Express
-
 Support for the following authentication strategies using [passport.js](http://www.passportjs.org/).
 
 - Local
 - Facebook
 - Twitter
 - Google
+---
+
+- Next.js configured with Redux, Jest, Sass, and Express
 
 - JWT authentication flow with refresh tokens
 
