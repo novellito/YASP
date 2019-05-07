@@ -29,6 +29,8 @@ Support for the following authentication strategies using [passport.js](http://w
 
 ## App Structure
 
+⭐️ Index.js - Entry point of the client
+
 📁 Components - Application components
 
 📁 Lib - Library specific setup
@@ -41,7 +43,7 @@ Support for the following authentication strategies using [passport.js](http://w
 
 ## Server 📁
 
-⭐️ Index.js - Entry point of the app
+⭐️ Index.js - Entry point of the server
 
 📁 Auth - Contains logic for the various authentication strategies.
 
