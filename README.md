@@ -18,11 +18,12 @@ Support for the following authentication strategies using [passport.js](http://w
 - Facebook
 - Twitter
 - Google
+
 ---
 
 - Next.js configured with Redux, Jest, Sass, and Express
 
-- JWT authentication flow with refresh tokens
+- JWT authentication flow with refresh tokens (using Redis)
 
 - Docker ready 🐳
 
