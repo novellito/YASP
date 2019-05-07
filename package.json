@@ -11,13 +11,24 @@
   "author": "Christian Trinidad",
   "license": "ISC",
   "dependencies": {
+    "@babel/core": "^7.4.4",
     "axios": "^0.18.0",
+    "babel-jest": "^24.8.0",
+    "enzyme": "^3.9.0",
+    "enzyme-adapter-react-16": "^1.12.1",
     "express": "^4.16.4",
     "http-proxy-middleware": "^0.19.1",
+    "jest": "^24.8.0",
     "next": "^8.1.0",
     "node-sass": "^4.12.0",
     "react": "^16.8.6",
+    "react-addons-test-utils": "^15.6.2",
     "react-dom": "^16.8.6",
+    "react-redux": "^7.0.3",
+    "react-test-renderer": "^16.8.6",
+    "redux": "^4.0.1",
+    "redux-devtools-extension": "^2.13.8",
+    "redux-thunk": "^2.3.0",
     "styled-jsx-plugin-sass": "^1.0.0"
   }
 }
