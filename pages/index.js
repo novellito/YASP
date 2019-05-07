@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 import React from 'react';
 import { connect } from 'react-redux';
-import { startClock, serverRenderClock } from '../reducers/store';
+import { startClock, serverRenderClock } from '../store/store';
 
 import Examples from '../components/examples';
 

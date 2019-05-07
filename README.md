@@ -2,23 +2,40 @@
 
 A boilerplate project made to help you get up and running with apps that require authentication 🚀
 
-The app currently supports the following authentication strategies using [passport.js](http://www.passportjs.org/).
+## Tech Stack
+
+- Next.js
+- Node.js
+- MongoDB
+- Redis
+- Docker
+
+## Features
+
+- Next.js configured with Redux, Jest, and Sass
+
+Support for the following authentication strategies using [passport.js](http://www.passportjs.org/).
 
 - Local
 - Facebook
 - Twitter
 - Google
 
-It uses a JWT authentication flow with refresh tokens.
+- JWT authentication flow with refresh tokens
 
-## Tech Stack
-
-- Node.js
-- MongoDB
-- Redis
-- Docker
+- Docker ready 🐳
 
 ## App Structure
+
+📁 Components - Application components
+
+📁 Lib - Library specific setup
+
+📁 Pages - Application pages
+
+📁 Store - Store & Reducer logic
+
+📁 Tests - Client side tests
 
 ## Server 📁
 
