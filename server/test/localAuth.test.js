@@ -38,7 +38,7 @@ describe('Local Auth Suite', () => {
 
     const response = await chai
       .request(app)
-      .post('/local/signup')
+      .post('/api/local/signup')
       .send(newUser);
 
     expect(response.statusCode).to.equal(200);
@@ -56,10 +56,10 @@ describe('Local Auth Suite', () => {
 
     const response = await chai
       .request(app)
-      .post('/local/signup')
+      .post('/api/local/signup')
       .send(newUser);
 
-    expect(response.statusCode).to.equal(500);
+    expect(response.error).to.exist;
     await UserModel.findOneAndDelete({ email: 'newUser@test.com' });
 
     return response;
@@ -68,7 +68,7 @@ describe('Local Auth Suite', () => {
   it('Should log in the user', async () => {
     const response = await chai
       .request(app)
-      .post('/local/login')
+      .post('/api/local/login')
       .send(creds);
 
     expect(response.statusCode).to.equal(200);
@@ -86,7 +86,7 @@ describe('Local Auth Suite', () => {
 
     const response = await chai
       .request(app)
-      .get('/user/profile')
+      .get('/api/user/profile')
       .set('Authorization', `Bearer ${token}`)
       .send(creds);
 

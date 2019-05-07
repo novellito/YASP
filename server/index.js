@@ -39,12 +39,12 @@ app.use('/api/facebook', fbAuthRoutes);
 app.use('/api/twitter', twitterAuthRoutes);
 app.use('/api/google', googleAuthRoutes);
 app.use(
-  '/user',
+  '/api/user',
   passport.authenticate('resources', { session: false }),
   protectedRoutes
 );
 app.use(
-  '/token',
+  '/api/token',
   passport.authenticate('token', { session: false }),
   tokenRoutes
 );
