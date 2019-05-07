@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "next",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "test": "jest --testPathIgnorePatterns server --watch"
   },
   "author": "Christian Trinidad",
   "license": "ISC",
