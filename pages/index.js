@@ -38,6 +38,9 @@ class Index extends React.Component {
         <Link href="/login">
           <a>Login</a>
         </Link>
+        <Link href="/register">
+          <a>Register</a>
+        </Link>
       </div>
     );
   }
