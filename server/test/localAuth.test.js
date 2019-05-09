@@ -1,13 +1,10 @@
 const chai = require('chai');
 const expect = chai.expect;
 const chaiHTTP = require('chai-http');
-const httpMocks = require('node-mocks-http');
 const jwt = require('jsonwebtoken');
 const app = require('../index');
 const UserModel = require('../models/User');
 const bcrypt = require('bcrypt');
-const controller = require('../controllers/localAuth');
-const sinon = require('sinon');
 chai.use(chaiHTTP);
 
 describe('Local Auth Suite', () => {
@@ -21,6 +18,7 @@ describe('Local Auth Suite', () => {
     const hash = await bcrypt.hash('password123', 10);
     user = new UserModel({
       email: 'testUser@test.com',
+      username: 'newUser',
       password: hash
     });
     user.save();
@@ -33,6 +31,7 @@ describe('Local Auth Suite', () => {
   it('Should sign up a new user', async () => {
     const newUser = {
       email: 'newUser@test.com',
+      username: 'newUser',
       password: 'jawdans'
     };
 
@@ -51,6 +50,7 @@ describe('Local Auth Suite', () => {
   it('Should reject signup with a short password ', async () => {
     const newUser = {
       email: 'newUser@test.com',
+      username: 'newUser',
       password: 'foo'
     };
 
@@ -95,24 +95,5 @@ describe('Local Auth Suite', () => {
     expect(response.body.msg).to.equal('This route is protected!');
 
     return response;
-  });
-
-  it('should verify the register body', () => {
-    const req = httpMocks.createRequest();
-    const res = httpMocks.createResponse();
-    const next = sinon.fake();
-    const spy = sinon.spy(controller.verifyRegisterBody);
-    spy(req, res, next);
-    expect(next.called).to.be.true;
-  });
-
-  it('should reject a body with no content', () => {
-    const req = httpMocks.createRequest();
-    const res = httpMocks.createResponse();
-    const next = err => {
-      expect(err).to.exist;
-    };
-    const spy = sinon.spy(controller.verifyRegisterBody);
-    spy(req, res, next);
   });
 });
