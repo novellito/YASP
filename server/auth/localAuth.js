@@ -16,16 +16,22 @@ module.exports = (...dependencies) => {
     new localStrategy(
       {
         usernameField: 'email',
-        passwordField: 'password'
+        passwordField: 'password',
+        passReqToCallback: true
       },
-      async (email, password, done) => {
+      async (req, email, password, done) => {
+        // yes I know I could have used req.body to retrieve all the info I need!
         try {
           const hash = await bcrypt.hash(password, 10);
-          const user = await userSVC.addNewUserToDb(email, hash);
+          const user = await userSVC.addNewUserToDb(
+            { email, username: req.body.username },
+            hash
+          );
           const { token, refreshToken } = tokenSVC.generateTokens(email);
           const body = {
             _id: user._id,
             email: user.email,
+            username: user.username,
             token,
             refreshToken
           };

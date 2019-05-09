@@ -1,23 +1,6 @@
 const passport = require('passport');
-const Joi = require('@hapi/joi');
 
 const LocalAuthController = {};
-
-const registerBodySchema = Joi.object().keys({
-  email: Joi.string()
-    .email({ minDomainSegments: 2 })
-    .required(),
-  password: Joi.string()
-    .min(4)
-    .required()
-});
-
-// We ensure that the incoming register body only comprises of an email and password!
-LocalAuthController.verifyRegisterBody = (req, res, next) => {
-  const { error } = Joi.validate(req.body, registerBodySchema);
-  if (error) return next(error);
-  next();
-};
 
 LocalAuthController.sendResponse = (req, res) => {
   res.json({

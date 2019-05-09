@@ -4,7 +4,13 @@ SocialsController.sendResponse = (req, res) => {
   const { user, token, refreshToken } = req.body;
   res
     .status(200)
-    .send({ _id: user._id, email: user.email, refreshToken, token });
+    .send({
+      _id: user._id,
+      email: user.email,
+      username: user.username,
+      refreshToken,
+      token
+    });
 };
 
 module.exports = SocialsController;

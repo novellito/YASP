@@ -8,7 +8,6 @@ const router = express.Router();
 // variablee in passport.use() (in local.auth.js)
 router.post(
   '/signup',
-  controller.verifyRegisterBody,
   passport.authenticate('signup', { session: false }),
   controller.sendResponse
 );
