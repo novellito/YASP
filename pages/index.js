@@ -6,6 +6,8 @@ import { connect } from 'react-redux';
 import { startClock, serverRenderClock } from '../store/store';
 
 import Examples from '../components/examples';
+import Home from './home';
+import Landing from './landing';
 
 class Index extends React.Component {
   static getInitialProps({ reduxStore, req }) {
@@ -33,14 +35,9 @@ class Index extends React.Component {
           <title>Yet Another Starter Pack</title>
           <meta name="description" content="Boilerplate login application" />
         </Head>
-        <p>Welcome to YASP</p>
-        <Examples />
-        <Link href="/login">
-          <a>Login</a>
-        </Link>
-        <Link href="/register">
-          <a>Register</a>
-        </Link>
+        <Landing />
+        {/* <Home /> */}
+        {/* <Examples /> */}
       </div>
     );
   }

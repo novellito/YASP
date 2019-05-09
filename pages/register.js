@@ -8,6 +8,9 @@ const Register = props => {
       <Link href="/login">
         <a>Login</a>
       </Link>
+      <Link href="/">
+        <a>Landing</a>
+      </Link>
       <Forms register />
     </div>
   );

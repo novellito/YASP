@@ -1,21 +1,55 @@
 import { useState } from 'react';
+import { withRouter } from 'next/router';
+
+import axios from 'axios';
 
 const Forms = props => {
-  const [email, setEmail] = useState('');
+  const [emailObj, setEmail] = useState({ email: '', valid: true });
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
+  const checkEmailValidity = () => {
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (re.test(String(emailObj.email).toLowerCase())) {
+      setEmail({ ...emailObj, valid: true });
+      return;
+    }
+    setEmail({ ...emailObj, valid: false });
+  };
+
+  const submitForm = async () => {
+    if (props.router.asPath === '/register') {
+      try {
+        console.log('ook');
+        const { data } = await axios.post('/api/local/signup', {
+          email: emailObj.email,
+          username,
+          password
+        });
+        console.log(data);
+      } catch (err) {
+        console.log(err);
+      }
+    } else {
+      //login
+    }
+  };
+
   return (
     <div>
-      {/* todo - add regex validation for email!!! */}
       <label htmlFor="email">Email</label>
       <input
         type="text"
         name="email"
-        onChange={e => setEmail(e.target.value)}
-        value={email}
+        onBlur={checkEmailValidity}
+        onChange={e =>
+          setEmail({ ...emailObj, email: e.target.value, valid: true })
+        }
+        value={emailObj.email}
       />
-      {email}
+      {emailObj.email}
+      <br />
+      {!emailObj.valid ? 'Invalid email!!' : ''}
       {props.register ? (
         <>
           <label htmlFor="username">Username</label>
@@ -38,9 +72,9 @@ const Forms = props => {
         value={password}
       />
       {password}
-      {/* <button onClick={this.handleSubmit}>Submit</button> */}
+      <button onClick={submitForm}>Submit</button>
     </div>
   );
 };
 
-export default Forms;
+export default withRouter(Forms);

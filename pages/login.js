@@ -8,6 +8,9 @@ const Login = props => {
       <Link href="/register">
         <a>Register Page</a>
       </Link>
+      <Link href="/">
+        <a>Landing</a>
+      </Link>
       <Forms />
     </div>
   );
