@@ -20,7 +20,6 @@ const Forms = props => {
   const submitForm = async () => {
     if (props.router.asPath === '/register') {
       try {
-        console.log('ook');
         const { data } = await axios.post('/api/local/signup', {
           email: emailObj.email,
           username,
