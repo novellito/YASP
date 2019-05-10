@@ -15,19 +15,12 @@ const reducer = (state = initialState, action) => {
         userId: action.userId,
         user: action.user
       };
-    case 'USER_LOGIN':
-      return {
-        ...state,
-        isLoggedIn: false,
-        userId: null,
-        user: null
-      };
     case 'USER_LOGOUT':
       return {
         ...state,
         isLoggedIn: false,
         userId: null,
-        user: null
+        username: null
       };
 
     default:

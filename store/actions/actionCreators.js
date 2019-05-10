@@ -46,6 +46,7 @@ export const socialLogin = platform => {
 };
 
 export const logout = () => {
+  //clear local storeage here!
   return {
     type: 'USER_LOGOUT'
   };

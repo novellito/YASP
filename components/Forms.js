@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { withRouter } from 'next/router';
+import Router, { withRouter } from 'next/router';
+
 import * as actionCreators from '../store/actions/actionCreators';
 import axios from 'axios';
 import { connect } from 'react-redux';
@@ -32,12 +33,13 @@ const Forms = props => {
       }
     } else {
       //localLogin
-      try {
-        const foo = await props.localLogin(emailObj.email, password);
-        console.log(foo.name); // == Error
-      } catch (err) {
-        console.log('err', err);
+      const { user } = await props.localLogin(emailObj.email, password);
+      console.log(user);
+      if (user) {
+        Router.push('/home');
       }
+      // console.log(foo.name); // == Error
+
       // push route rhere
     }
   };
