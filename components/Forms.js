@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { withRouter } from 'next/router';
-
+import * as actionCreators from '../store/actions/actionCreators';
 import axios from 'axios';
+import { connect } from 'react-redux';
 
 const Forms = props => {
   const [emailObj, setEmail] = useState({ email: '', valid: true });
@@ -30,7 +31,14 @@ const Forms = props => {
         console.log(err);
       }
     } else {
-      //login
+      //localLogin
+      try {
+        const foo = await props.localLogin(emailObj.email, password);
+        console.log(foo.name); // == Error
+      } catch (err) {
+        console.log('err', err);
+      }
+      // push route rhere
     }
   };
 
@@ -75,5 +83,15 @@ const Forms = props => {
     </div>
   );
 };
+const mapDispatchToProps = dispatch => {
+  return {
+    localLogin: (email, password) =>
+      dispatch(actionCreators.localLogin(email, password)),
+    socialLogin: platform => dispatch(actionCreators.socialLogin(platform))
+  };
+};
 
-export default withRouter(Forms);
+export default connect(
+  null,
+  mapDispatchToProps
+)(withRouter(Forms));
