@@ -1,10 +1,11 @@
 import axios from 'axios';
 
-export const setUser = (userId, user) => {
+export const setUser = ({ id, email, username }) => {
   return {
     type: 'SET_USER',
-    userId,
-    user
+    id,
+    email,
+    username
   };
 };
 
@@ -15,9 +16,15 @@ export const localLogin = (email, password) => {
         email,
         password
       });
-      // TODO: set the localstorage
-      dispatch(setUser(data.user._id, data.user.email));
-      //   console.log(data);
+      localStorage.setItem('jwt', data.user.token);
+      localStorage.setItem('refreshToken', data.user.refreshToken);
+      dispatch(
+        setUser({
+          id: data.user._id,
+          email: data.user.email,
+          username: data.user.username
+        })
+      );
       return data;
     } catch (err) {
       return err;
@@ -33,20 +40,24 @@ export const socialLogin = platform => {
         password
       });
       // dispatch here & set the localstorage
-      dispatch(setUser(data.user._id, data.user.email));
+      dispatch(
+        setUser({
+          id: data.user._id,
+          email: data.user.email,
+          username: data.user.username
+        })
+      );
       //   console.log(data);
       return data;
     } catch (err) {
       return err;
     }
   };
-  //   return {
-  //     type: 'USER_LOGOUT'
-  //   };
 };
 
 export const logout = () => {
-  //clear local storeage here!
+  localStorage.removeItem('jwt');
+  localStorage.removeItem('refreshToken');
   return {
     type: 'USER_LOGOUT'
   };

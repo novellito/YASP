@@ -3,6 +3,7 @@
 const initialState = {
   isLoggedIn: false,
   userId: null,
+  email: null,
   username: null
 };
 
@@ -12,14 +13,16 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         isLoggedIn: true,
-        userId: action.userId,
-        user: action.user
+        userId: action.id,
+        email: action.email,
+        user: action.username
       };
     case 'USER_LOGOUT':
       return {
         ...state,
         isLoggedIn: false,
         userId: null,
+        email: null,
         username: null
       };
 

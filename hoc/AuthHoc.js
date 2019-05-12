@@ -10,7 +10,7 @@ export default function(ChildComponent) {
     const { isLoggedIn } = props;
 
     useEffect(() => {
-      if (!isLoggedIn) Router.push('/login');
+      // if (!isLoggedIn) Router.push('/login');
     }, []);
 
     return (
@@ -22,7 +22,8 @@ export default function(ChildComponent) {
     return {
       isLoggedIn: state.login.isLoggedIn,
       userId: state.login.userId,
-      user: state.login.user
+      username: state.login.username,
+      email: state.login.email
     };
   };
   const mapDispatchToProps = dispatch => {

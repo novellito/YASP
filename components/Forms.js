@@ -32,15 +32,10 @@ const Forms = props => {
         console.log(err);
       }
     } else {
-      //localLogin
       const { user } = await props.localLogin(emailObj.email, password);
-      console.log(user);
       if (user) {
         Router.push('/home');
       }
-      // console.log(foo.name); // == Error
-
-      // push route rhere
     }
   };
 

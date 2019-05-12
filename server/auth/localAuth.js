@@ -61,6 +61,7 @@ module.exports = (...dependencies) => {
           const body = {
             _id: user._id,
             email: user.email,
+            user: user.username,
             token,
             refreshToken
           };
@@ -80,9 +81,10 @@ module.exports = (...dependencies) => {
         secretOrKey: process.env.SECRET_ONE,
         jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken()
       },
-      async (token, done) => {
+      (token, done) => {
         try {
           // Send user to next middleware
+          console.log(token);
           return done(null, token.email);
         } catch (error) {
           return done(error);
@@ -99,7 +101,8 @@ module.exports = (...dependencies) => {
         secretOrKey: process.env.SECRET_TWO,
         jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken()
       },
-      async (token, done) => {
+      (token, done) => {
+        console.log(token);
         try {
           // Send user to next middleware
           return done(null, token.email);
