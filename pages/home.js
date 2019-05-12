@@ -69,13 +69,4 @@ const Home = props => {
   );
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    logout: () => dispatch(actionCreators.logout())
-  };
-};
-
-export default connect(
-  null,
-  mapDispatchToProps
-)(authenticate(Home));
+export default authenticate(Home);

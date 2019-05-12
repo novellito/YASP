@@ -27,11 +27,19 @@ const Forms = props => {
           username,
           password
         });
-        console.log(data);
+        localStorage.setItem('jwt', data.user.token);
+        localStorage.setItem('refreshToken', data.user.refreshToken);
+        props.setUser({
+          id: data.user._id,
+          username: data.user.username,
+          email: data.user.email
+        });
+        Router.push('/home');
       } catch (err) {
         console.log(err);
       }
     } else {
+      // User is logging in
       const { user } = await props.localLogin(emailObj.email, password);
       if (user) {
         Router.push('/home');
@@ -84,6 +92,14 @@ const mapDispatchToProps = dispatch => {
   return {
     localLogin: (email, password) =>
       dispatch(actionCreators.localLogin(email, password)),
+    setUser: user =>
+      dispatch(
+        actionCreators.setUser({
+          id: user.id,
+          email: user.email,
+          username: user.username
+        })
+      ),
     socialLogin: platform => dispatch(actionCreators.socialLogin(platform))
   };
 };

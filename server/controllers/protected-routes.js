@@ -1,6 +1,12 @@
 const tokenSVC = require('../services/TokenService');
-
+const userSVC = require('../services/UserService');
 const ProtectedRoutesController = {};
+
+ProtectedRoutesController.fetchUserInfo = async (req, res, next) => {
+  const user = await userSVC.getUserInfo(req.user);
+  req.user = user;
+  next();
+};
 
 ProtectedRoutesController.sendResponse = (req, res) => {
   res.json({

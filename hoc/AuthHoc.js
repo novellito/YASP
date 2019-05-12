@@ -4,13 +4,33 @@ import Router from 'next/router';
 
 import axios from 'axios';
 import * as actionCreators from '../store/actions/actionCreators';
+const createGetRequest = async () => {
+  const headers = {
+    Authorization: `Bearer ${localStorage.getItem('jwt')}`,
+    'Content-Type': 'application/json'
+  };
+
+  return await axios.get('/api/user/profile', { headers });
+};
 
 export default function(ChildComponent) {
   const Authenticate = props => {
     const { isLoggedIn } = props;
-
     useEffect(() => {
-      // if (!isLoggedIn) Router.push('/login');
+      const createGet = async () => {
+        if (!isLoggedIn) {
+          try {
+            const { data } = await createGetRequest();
+            if (data) {
+              const { username, id, email } = data.user;
+              props.setUser({ username, id, email });
+            }
+          } catch (err) {
+            Router.push('/login');
+          }
+        }
+      };
+      createGet();
     }, []);
 
     return (
@@ -26,9 +46,18 @@ export default function(ChildComponent) {
       email: state.login.email
     };
   };
+
   const mapDispatchToProps = dispatch => {
     return {
-      logout: () => dispatch(actionCreators.logout())
+      logout: () => dispatch(actionCreators.logout()),
+      setUser: user =>
+        dispatch(
+          actionCreators.setUser({
+            id: user.id,
+            email: user.email,
+            username: user.username
+          })
+        )
     };
   };
 

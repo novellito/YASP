@@ -20,4 +20,11 @@ module.exports = new (class UserService {
 
     return { user };
   }
+
+  async getUserInfo(email) {
+    const user = await UserModel.findOne({ email });
+    if (!user) return { message: 'User not found' };
+
+    return { username: user.username, email: user.email, id: user._id };
+  }
 })();

@@ -56,6 +56,21 @@ export const socialLogin = platform => {
 };
 
 export const logout = () => {
+  return async dispatch => {
+    try {
+      const headers = {
+        Authorization: `Bearer ${localStorage.getItem('refreshToken')}`,
+        'Content-Type': 'application/json'
+      };
+      await axios.delete(`/api/token`, { headers });
+      dispatch(logoutUser());
+    } catch (err) {
+      return err;
+    }
+  };
+};
+
+export const logoutUser = () => {
   localStorage.removeItem('jwt');
   localStorage.removeItem('refreshToken');
   return {
