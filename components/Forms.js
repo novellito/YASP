@@ -116,13 +116,14 @@ const Forms = props => {
       </Form.Field>
       {password}
       <div className="submit-btn">
-        <Button className="ui button " onClick={submitForm}>
+        <Button color="teal" className="ui button " onClick={submitForm}>
           {props.router.asPath === '/register' ? 'Register' : 'Sign In'}
         </Button>
       </div>
       <style jsx>{`
         .subtext {
           font-size: 0.9em;
+          margin: 5px 0;
         }
         .submit-btn {
           margin: 10px;
