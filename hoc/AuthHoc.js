@@ -1,22 +1,31 @@
 import { connect } from 'react-redux';
 import { useEffect } from 'react';
-import Router from 'next/router';
+import Router, { withRouter } from 'next/router';
 import { createGetRequest } from '../utils/index';
 import * as actionCreators from '../store/actions/actionCreators';
 
-export default function(ChildComponent) {
+export default function(ChildComponent, loginRegister = false) {
   const Authenticate = props => {
     const { isLoggedIn } = props;
     useEffect(() => {
-      const createGet = async () => {
+      const checkAuthStatus = async () => {
+        // If nothing in local store - immediately redirect to login page
+        if (localStorage.length !== 2) {
+          const path = props.router.asPath;
+          if (path === '/register' || path === '/login') {
+            Router.push(path);
+          }
+          Router.push('/login');
+          return;
+        }
         if (!isLoggedIn) {
-          console.log('foobaz');
           try {
             const { data } = await createGetRequest();
             console.log(data);
             if (data) {
               const { username, id, email } = data.user;
               props.setUser({ username, id, email });
+              Router.push('/home');
             }
           } catch (err) {
             console.log(err);
@@ -24,11 +33,13 @@ export default function(ChildComponent) {
           }
         }
       };
-      createGet();
+      checkAuthStatus();
     }, []);
 
     return (
-      <div>{isLoggedIn ? <ChildComponent {...props} /> : 'not logged in!'}</div>
+      <div>
+        {isLoggedIn || loginRegister ? <ChildComponent {...props} /> : ''}
+      </div>
     );
   };
 
@@ -58,5 +69,5 @@ export default function(ChildComponent) {
   return connect(
     mapStateToProps,
     mapDispatchToProps
-  )(Authenticate);
+  )(withRouter(Authenticate));
 }

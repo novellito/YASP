@@ -13,7 +13,7 @@ const reducer = (state = initialState, action) => {
         isLoggedIn: true,
         userId: action.id,
         email: action.email,
-        user: action.username
+        username: action.username
       };
     case 'USER_LOGOUT':
       return {

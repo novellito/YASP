@@ -1,9 +1,10 @@
-import Link from 'next/link';
 import authenticate from '../hoc/AuthHoc';
 import { useState } from 'react';
 import Router from 'next/router';
 import axios from 'axios';
 import { createGetRequest } from '../utils/index';
+import { Button } from 'semantic-ui-react';
+
 const refetchToken = async email => {
   try {
     const headers = {
@@ -45,14 +46,19 @@ const Home = props => {
   };
 
   return (
-    <div>
-      <h1>Welcome Home!</h1>
-      {props.user}
+    <div id="home">
+      <h1>Welcome Home {props.username} !</h1>
+      {/* {props.user}
       <br />
-      {props.userId}
+      {props.userId} */}
 
       <h1>{isValid ? 'VALID' : 'INVALID'}</h1>
       <button onClick={retrieveUserInfo}>Get My Info</button>
+      <style jsx>{`
+        #home {
+          padding: 20px;
+        }
+      `}</style>
     </div>
   );
 };

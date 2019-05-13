@@ -1,6 +1,7 @@
 import Forms from '../components/Forms';
 import FormCard from '../components/FormCard';
 import Socials from '../components/SocialLogins';
+import authenticate from '../hoc/AuthHoc';
 
 const Login = props => {
   const openPopup = () => {
@@ -32,4 +33,4 @@ const Login = props => {
   );
 };
 
-export default Login;
+export default authenticate(Login, true);
