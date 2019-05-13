@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Router, { withRouter } from 'next/router';
 
+import { Button, Form, Message } from 'semantic-ui-react';
 import * as actionCreators from '../store/actions/actionCreators';
 import axios from 'axios';
 import { connect } from 'react-redux';
@@ -48,44 +49,60 @@ const Forms = props => {
   };
 
   return (
-    <div>
-      <label htmlFor="email">Email</label>
-      <input
-        type="text"
-        name="email"
-        onBlur={checkEmailValidity}
-        onChange={e =>
-          setEmail({ ...emailObj, email: e.target.value, valid: true })
-        }
-        value={emailObj.email}
-      />
-      {emailObj.email}
-      <br />
-      {!emailObj.valid ? 'Invalid email!!' : ''}
+    <Form error>
+      <Form.Field>
+        <label htmlFor="email">Email</label>
+        <input
+          type="text"
+          name="email"
+          placeholder="test@test.com"
+          onBlur={checkEmailValidity}
+          onChange={e =>
+            setEmail({ ...emailObj, email: e.target.value, valid: true })
+          }
+          value={emailObj.email}
+        />
+      </Form.Field>
+      {!emailObj.valid ? (
+        <Message
+          error
+          header="Invalid email"
+          content="Please enter a valid email address"
+        />
+      ) : (
+        ''
+      )}
       {props.register ? (
         <>
-          <label htmlFor="username">Username</label>
-          <input
-            type="text"
-            name="username"
-            onChange={e => setUsername(e.target.value)}
-            value={username}
-          />
-          {username}
+          <Form.Field>
+            <label htmlFor="username">Username</label>
+            <input
+              type="text"
+              name="username"
+              onChange={e => setUsername(e.target.value)}
+              value={username}
+            />
+            {username}
+          </Form.Field>
         </>
       ) : (
         ''
       )}
-      <label htmlFor="password">Password</label>
-      <input
-        type="text"
-        name="password"
-        onChange={e => setPassword(e.target.value)}
-        value={password}
-      />
+      <Form.Field>
+        <label htmlFor="password">Password</label>
+        <input
+          type="text"
+          name="password"
+          onChange={e => setPassword(e.target.value)}
+          value={password}
+        />
+      </Form.Field>
       {password}
-      <button onClick={submitForm}>Submit</button>
-    </div>
+      {/* <button >Submit</button> */}
+      <Button className="ui button" onClick={submitForm}>
+        Submit
+      </Button>
+    </Form>
   );
 };
 const mapDispatchToProps = dispatch => {
