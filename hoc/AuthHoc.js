@@ -29,6 +29,7 @@ export default function(ChildComponent, loginRegister = false) {
             }
           } catch (err) {
             console.log(err);
+            localStorage.clear();
             Router.push('/login');
           }
         }

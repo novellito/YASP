@@ -22,7 +22,7 @@ export const localLogin = (email, password) => {
         setUser({
           id: data.user._id,
           email: data.user.email,
-          username: data.user.username
+          username: data.user.user
         })
       );
       return data;

@@ -14,8 +14,8 @@ module.exports = new (class TokenService {
   }
   generateTokens(email) {
     const token = jwt.sign({ email }, process.env.SECRET_ONE, {
-      expiresIn: '10m'
-      // expiresIn: '5s'
+      // expiresIn: '10m'
+      expiresIn: '5s'
     });
     // const token = jwt.sign({ email }, process.env.SECRET_ONE, { expiresIn: '30m' });
     const refreshToken = jwt.sign({ email }, process.env.SECRET_TWO);

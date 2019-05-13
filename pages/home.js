@@ -25,35 +25,35 @@ const refetchToken = async email => {
 const Home = props => {
   const [isValid, setValid] = useState(false);
 
-  const logout = () => {
-    props.logout();
-    Router.push('/login');
-  };
-
+  // The function is an example of how the client requests for a new jwt after
+  // the current one expires.
   const retrieveUserInfo = async () => {
     try {
       const { data } = await createGetRequest();
 
       if (data) {
         console.log('User is still valid');
-        // here we will trigger to show the userinfo!
+        console.log(data);
       }
     } catch (err) {
       // the jwt has expired so check for refreshToken
+      setValid(false);
+      // use setTimeout to visualize the token status change
       await refetchToken(props.email);
-      setValid(true);
+      setTimeout(() => {
+        setValid(true);
+      }, 1500);
     }
   };
 
   return (
     <div id="home">
       <h1>Welcome Home {props.username} !</h1>
-      {/* {props.user}
-      <br />
-      {props.userId} */}
-
-      <h1>{isValid ? 'VALID' : 'INVALID'}</h1>
-      <button onClick={retrieveUserInfo}>Get My Info</button>
+      <h2>Your Info: </h2>
+      <p>email: {props.email}</p>
+      <p>id: {props.userId}</p>
+      <p>Is token valid: {isValid ? 'valid' : 'not valid'}</p>
+      <Button onClick={retrieveUserInfo}>Get My Info</Button>
       <style jsx>{`
         #home {
           padding: 20px;
