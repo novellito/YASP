@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Router, { withRouter } from 'next/router';
-
+import Link from 'next/link';
 import { Button, Form, Message } from 'semantic-ui-react';
 import * as actionCreators from '../store/actions/actionCreators';
 import axios from 'axios';
@@ -96,12 +96,39 @@ const Forms = props => {
           onChange={e => setPassword(e.target.value)}
           value={password}
         />
+        <div className="subtext">
+          {props.router.asPath === '/login' ? (
+            <>
+              <span>Don't have an account? </span>
+              <Link href="/register">
+                <a>Register here</a>
+              </Link>
+            </>
+          ) : (
+            <>
+              <span>Already have an account? </span>
+              <Link href="/login">
+                <a>Log in here</a>
+              </Link>
+            </>
+          )}
+        </div>
       </Form.Field>
       {password}
-      {/* <button >Submit</button> */}
-      <Button className="ui button" onClick={submitForm}>
-        Submit
-      </Button>
+      <div className="submit-btn">
+        <Button className="ui button " onClick={submitForm}>
+          {props.router.asPath === '/register' ? 'Register' : 'Sign In'}
+        </Button>
+      </div>
+      <style jsx>{`
+        .subtext {
+          font-size: 0.9em;
+        }
+        .submit-btn {
+          margin: 10px;
+          text-align: center;
+        }
+      `}</style>
     </Form>
   );
 };

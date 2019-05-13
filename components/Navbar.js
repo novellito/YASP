@@ -17,7 +17,9 @@ const Navbar = props => {
     <>
       <Menu inverted>
         <Menu.Item>
-          <Image size="mini" src="https://react.semantic-ui.com/logo.png" />
+          <Link href="/">
+            <Image size="mini" src="https://react.semantic-ui.com/logo.png" />
+          </Link>
         </Menu.Item>
 
         <Menu.Menu position="right">

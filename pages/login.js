@@ -1,6 +1,6 @@
 import Forms from '../components/Forms';
-import Link from 'next/link';
-import { Card } from 'semantic-ui-react';
+import FormCard from '../components/FormCard';
+import Socials from '../components/SocialLogins';
 
 const Login = props => {
   const openPopup = () => {
@@ -20,30 +20,15 @@ const Login = props => {
     );
   };
   return (
-    <div>
-      <Card>
-        <Card.Content>
-          <Card.Header content={<h1>Login</h1>} />
-          <Card.Description
-            content={
-              <>
-                <Link href="/register">
-                  <a>Register Page</a>
-                </Link>
-                <Link href="/">
-                  <a>Landing</a>
-                </Link>
-                {/* <button onClick={openPopup}>FACEBOOK</button> */}
-                <a href="http://localhost:5000/api/facebook/login">
-                  Facebook Login
-                </a>
-                <Forms />
-              </>
-            }
-          />
-        </Card.Content>
-      </Card>
-    </div>
+    <FormCard
+      title="Login"
+      type={
+        <>
+          <Forms />
+          <Socials />
+        </>
+      }
+    />
   );
 };
 
