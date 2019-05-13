@@ -17,6 +17,4 @@ const SocialLogins = props => {
   );
 };
 
-SocialLogins.propTypes = {};
-
 export default SocialLogins;

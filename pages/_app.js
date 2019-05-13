@@ -17,9 +17,9 @@ class MyApp extends App {
             href="//cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css"
           />
         </Head>
-        <Navbar />
         <Container>
           <Provider store={reduxStore}>
+            <Navbar />
             <Component {...pageProps} />
           </Provider>
         </Container>

@@ -1,17 +1,8 @@
 import { connect } from 'react-redux';
 import { useEffect } from 'react';
 import Router from 'next/router';
-
-import axios from 'axios';
+import { createGetRequest } from '../utils/index';
 import * as actionCreators from '../store/actions/actionCreators';
-const createGetRequest = async () => {
-  const headers = {
-    Authorization: `Bearer ${localStorage.getItem('jwt')}`,
-    'Content-Type': 'application/json'
-  };
-
-  return await axios.get('/api/user/profile', { headers });
-};
 
 export default function(ChildComponent) {
   const Authenticate = props => {
@@ -19,13 +10,16 @@ export default function(ChildComponent) {
     useEffect(() => {
       const createGet = async () => {
         if (!isLoggedIn) {
+          console.log('foobaz');
           try {
             const { data } = await createGetRequest();
+            console.log(data);
             if (data) {
               const { username, id, email } = data.user;
               props.setUser({ username, id, email });
             }
           } catch (err) {
+            console.log(err);
             Router.push('/login');
           }
         }

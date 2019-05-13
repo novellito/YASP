@@ -1,11 +1,9 @@
 import Link from 'next/link';
 import authenticate from '../hoc/AuthHoc';
 import { useState } from 'react';
-import { connect } from 'react-redux';
 import Router from 'next/router';
 import axios from 'axios';
-import * as actionCreators from '../store/actions/actionCreators';
-
+import { createGetRequest } from '../utils/index';
 const refetchToken = async email => {
   try {
     const headers = {
@@ -23,14 +21,6 @@ const refetchToken = async email => {
   }
 };
 
-const createGetRequest = () => {
-  const headers = {
-    Authorization: `Bearer ${localStorage.getItem('jwt')}`,
-    'Content-Type': 'application/json'
-  };
-  return axios.get('/api/user/profile', { headers });
-};
-
 const Home = props => {
   const [isValid, setValid] = useState(false);
 
@@ -41,7 +31,8 @@ const Home = props => {
 
   const retrieveUserInfo = async () => {
     try {
-      const data = await createGetRequest();
+      const { data } = await createGetRequest();
+
       if (data) {
         console.log('User is still valid');
         // here we will trigger to show the userinfo!
@@ -59,10 +50,7 @@ const Home = props => {
       {props.user}
       <br />
       {props.userId}
-      <button onClick={logout}>Logout</button>
-      <Link href="/register">
-        <a>Register</a>
-      </Link>
+
       <h1>{isValid ? 'VALID' : 'INVALID'}</h1>
       <button onClick={retrieveUserInfo}>Get My Info</button>
     </div>

@@ -1,5 +1,3 @@
-// import * as actionTypes from '../actions/actionTypes';
-
 const initialState = {
   isLoggedIn: false,
   userId: null,

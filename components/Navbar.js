@@ -1,15 +1,6 @@
-import {
-  Container,
-  Icon,
-  Image,
-  Menu,
-  Sidebar,
-  Responsive
-} from 'semantic-ui-react';
-const rightItems = [
-  { as: 'a', content: 'Login', key: 'login' },
-  { as: 'a', content: 'Register', key: 'register' }
-];
+import { Image, Menu } from 'semantic-ui-react';
+import { connect } from 'react-redux';
+import * as actionCreators from '../store/actions/actionCreators';
 import Link from 'next/link';
 
 const Navbar = props => {
@@ -21,26 +12,48 @@ const Navbar = props => {
             <Image size="mini" src="https://react.semantic-ui.com/logo.png" />
           </Link>
         </Menu.Item>
-
         <Menu.Menu position="right">
-          <Menu.Item
-            content={
-              <Link href="/login">
-                <a>Login</a>
-              </Link>
-            }
-          />
-          <Menu.Item
-            content={
-              <Link href="/register">
-                <a>Register</a>
-              </Link>
-            }
-          />
+          {!props.isLoggedIn ? (
+            <>
+              <Menu.Item
+                content={
+                  <Link href="/login">
+                    <a>Login</a>
+                  </Link>
+                }
+              />
+              <Menu.Item
+                content={
+                  <Link href="/register">
+                    <a>Register</a>
+                  </Link>
+                }
+              />
+            </>
+          ) : (
+            <Link href="/login">
+              <Menu.Item as="a" onClick={props.logout} content={'Logout'} />
+            </Link>
+          )}
         </Menu.Menu>
       </Menu>
     </>
   );
 };
 
-export default Navbar;
+const mapStateToProps = state => {
+  return {
+    isLoggedIn: state.login.isLoggedIn
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    logout: () => dispatch(actionCreators.logout())
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Navbar);

@@ -32,6 +32,7 @@ export const localLogin = (email, password) => {
   };
 };
 
+// TODO: implement this!
 export const socialLogin = platform => {
   return async dispatch => {
     try {
@@ -63,14 +64,14 @@ export const logout = () => {
         'Content-Type': 'application/json'
       };
       await axios.delete(`/api/token`, { headers });
-      dispatch(logoutUser());
+      dispatch(clearCurrentUser());
     } catch (err) {
       return err;
     }
   };
 };
 
-export const logoutUser = () => {
+export const clearCurrentUser = () => {
   localStorage.removeItem('jwt');
   localStorage.removeItem('refreshToken');
   return {

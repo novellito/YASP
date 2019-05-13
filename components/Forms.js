@@ -1,18 +1,23 @@
 import { useState } from 'react';
-import Router, { withRouter } from 'next/router';
-import Link from 'next/link';
-import { Button, Form, Message } from 'semantic-ui-react';
-import * as actionCreators from '../store/actions/actionCreators';
-import axios from 'axios';
 import { connect } from 'react-redux';
+import * as actionCreators from '../store/actions/actionCreators';
+import Link from 'next/link';
+import Router, { withRouter } from 'next/router';
+import axios from 'axios';
+import { Button, Form, Message } from 'semantic-ui-react';
 
 const Forms = props => {
   const [emailObj, setEmail] = useState({ email: '', valid: true });
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [invalidCreds, setInvalidCreds] = useState(false);
+  const currRoute = props.router.asPath;
 
   const checkEmailValidity = () => {
     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (!emailObj.email) {
+      return;
+    }
     if (re.test(String(emailObj.email).toLowerCase())) {
       setEmail({ ...emailObj, valid: true });
       return;
@@ -21,7 +26,7 @@ const Forms = props => {
   };
 
   const submitForm = async () => {
-    if (props.router.asPath === '/register') {
+    if (currRoute === '/register') {
       try {
         const { data } = await axios.post('/api/local/signup', {
           email: emailObj.email,
@@ -44,6 +49,8 @@ const Forms = props => {
       const { user } = await props.localLogin(emailObj.email, password);
       if (user) {
         Router.push('/home');
+      } else {
+        setInvalidCreds(true);
       }
     }
   };
@@ -97,7 +104,16 @@ const Forms = props => {
           value={password}
         />
         <div className="subtext">
-          {props.router.asPath === '/login' ? (
+          {invalidCreds ? (
+            <>
+              <span style={{ color: 'red' }}>Invalid Credentials! </span>
+            </>
+          ) : (
+            ''
+          )}
+        </div>
+        <div className="subtext">
+          {currRoute === '/login' ? (
             <>
               <span>Don't have an account? </span>
               <Link href="/register">
@@ -114,16 +130,16 @@ const Forms = props => {
           )}
         </div>
       </Form.Field>
-      {password}
       <div className="submit-btn">
         <Button color="teal" className="ui button " onClick={submitForm}>
-          {props.router.asPath === '/register' ? 'Register' : 'Sign In'}
+          {currRoute === '/register' ? 'Register' : 'Sign In'}
         </Button>
       </div>
       <style jsx>{`
         .subtext {
           font-size: 0.9em;
           margin: 5px 0;
+          text-align: center;
         }
         .submit-btn {
           margin: 10px;
