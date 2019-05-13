@@ -14,9 +14,8 @@ export default function(ChildComponent, loginRegister = false) {
           const path = props.router.asPath;
           if (path === '/register' || path === '/login') {
             Router.push(path);
+            return;
           }
-          Router.push('/login');
-          return;
         }
         if (!isLoggedIn) {
           try {

@@ -1,16 +1,27 @@
 import Link from 'next/link';
+import { Button } from 'semantic-ui-react';
 const Landing = props => {
   return (
     <>
-      <div>
-        <h1>Welcome to YASP</h1>
+      <section id="landing">
+        <h1>Welcome to YASP 🚀</h1>
         <Link href="/login">
-          <a>Login</a>
+          <Button as="a" className="ui button" color="blue">
+            Login
+          </Button>
         </Link>
         <Link href="/register">
-          <a>Register</a>
+          <Button as="a" className="ui button" color="teal">
+            Register
+          </Button>
         </Link>
-      </div>
+
+        <style jsx>{`
+          #landing {
+            padding: 20px;
+          }
+        `}</style>
+      </section>
     </>
   );
 };

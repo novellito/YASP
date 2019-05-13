@@ -131,7 +131,7 @@ const Forms = props => {
         </div>
       </Form.Field>
       <div className="submit-btn">
-        <Button color="teal" className="ui button " onClick={submitForm}>
+        <Button color="teal" className="ui button" onClick={submitForm}>
           {currRoute === '/register' ? 'Register' : 'Sign In'}
         </Button>
       </div>

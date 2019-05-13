@@ -47,7 +47,7 @@ const Home = props => {
   };
 
   return (
-    <div id="home">
+    <section id="home">
       <h1>Welcome Home {props.username} !</h1>
       <h2>Your Info: </h2>
       <p>email: {props.email}</p>
@@ -59,7 +59,7 @@ const Home = props => {
           padding: 20px;
         }
       `}</style>
-    </div>
+    </section>
   );
 };
 
