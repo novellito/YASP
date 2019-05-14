@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { Button } from 'semantic-ui-react';
-const Landing = props => {
+
+export const Landing = props => {
   return (
     <>
       <section id="landing">
@@ -15,7 +16,6 @@ const Landing = props => {
             Register
           </Button>
         </Link>
-
         <style jsx>{`
           #landing {
             padding: 20px;

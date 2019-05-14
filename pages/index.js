@@ -4,13 +4,8 @@ import Landing from './landing';
 class Index extends React.Component {
   static getInitialProps({ reduxStore, req }) {
     const isServer = !!req;
-
     return {};
   }
-
-  componentDidMount() {}
-
-  componentWillUnmount() {}
 
   render() {
     return (

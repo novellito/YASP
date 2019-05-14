@@ -1,6 +1,6 @@
 import { Card } from 'semantic-ui-react';
 
-const Register = props => {
+const FormCard = props => {
   return (
     <div className="card-container">
       <Card style={{ width: '400px', padding: '20px' }}>
@@ -22,4 +22,4 @@ const Register = props => {
   );
 };
 
-export default Register;
+export default FormCard;

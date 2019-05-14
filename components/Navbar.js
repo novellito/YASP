@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import * as actionCreators from '../store/actions/actionCreators';
 import Link from 'next/link';
 
-const Navbar = props => {
+export const Navbar = props => {
   return (
     <>
       <Menu inverted>

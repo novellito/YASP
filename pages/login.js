@@ -3,7 +3,7 @@ import FormCard from '../components/FormCard';
 import Socials from '../components/SocialLogins';
 import authenticate from '../hoc/AuthHoc';
 
-const Login = props => {
+export const Login = props => {
   const openPopup = () => {
     // const { provider, socket } = this.props;
     const width = 600,

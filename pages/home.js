@@ -22,7 +22,7 @@ const refetchToken = async email => {
   }
 };
 
-const Home = props => {
+export const Home = props => {
   const [isValid, setValid] = useState(false);
 
   // The function is an example of how the client requests for a new jwt after
