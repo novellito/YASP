@@ -50,4 +50,21 @@ describe('Action creators suite', () => {
       expect(store.getActions()[0]).toEqual(expectedAction);
     });
   });
+
+  it('should create an action to set user information', () => {
+    const expectedAction = {
+      type: 'SET_USER',
+      id: mockUser._id,
+      email: mockUser.email,
+      username: mockUser.user
+    };
+
+    expect(
+      actionCreators.setUser({
+        email: 'foobar@test.com',
+        id: '777',
+        username: 'foobar'
+      })
+    ).toEqual(expectedAction);
+  });
 });
