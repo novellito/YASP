@@ -1,13 +1,12 @@
-import { shallow } from 'enzyme';
-import React from 'react';
-import renderer from 'react-test-renderer';
+// import React from 'react';
+// import renderer from 'react-test-renderer';
 
-import App from '../pages/index.js';
+// import App from '../pages/index.js';
 
-describe('With Enzyme', () => {
-  it('App shows "Hello world!"', () => {
-    const app = shallow(<App />);
+// describe('With Enzyme', () => {
+//   it('App shows "Hello world!"', () => {
+//     const app = shallow(<App />);
 
-    expect(app.find('p').text()).toEqual('Hello World!');
-  });
-});
+//     expect(app.find('p').text()).toEqual('Hello World!');
+//   });
+// });

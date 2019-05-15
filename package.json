@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.18.0",
+    "axios-mock-adapter": "^1.16.0",
     "express": "^4.16.4",
     "http-proxy-middleware": "^0.19.1",
     "next": "^8.1.0",
@@ -31,6 +32,7 @@
     "@zeit/next-sass": "^1.0.1",
     "babel-jest": "^24.8.0",
     "jest": "^24.8.0",
-    "nodemon": "^1.19.0"
+    "nodemon": "^1.19.0",
+    "redux-mock-store": "^1.5.3"
   }
 }
