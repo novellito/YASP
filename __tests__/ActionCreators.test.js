@@ -22,6 +22,8 @@ mock.onPost('/api/local/login').reply(200, {
   user: mockUser
 });
 
+mock.onDelete('/api/token').reply(200);
+
 describe('Action creators suite', () => {
   let store;
   beforeEach(() => {
@@ -66,5 +68,24 @@ describe('Action creators suite', () => {
         username: 'foobar'
       })
     ).toEqual(expectedAction);
+  });
+
+  it('should make a call to delete the users token and then call USER_LOGOUT', () => {
+    const expectedAction = {
+      type: 'USER_LOGOUT'
+    };
+
+    return store.dispatch(actionCreators.logout()).then(res => {
+      expect(localStorage.length).toEqual(0);
+      expect(store.getActions()[0]).toEqual(expectedAction);
+    });
+  });
+
+  it('should create an action to logout the user and clear local storage', () => {
+    const expectedAction = {
+      type: 'USER_LOGOUT'
+    };
+
+    expect(actionCreators.clearCurrentUser()).toEqual(expectedAction);
   });
 });

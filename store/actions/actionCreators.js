@@ -32,7 +32,7 @@ export const localLogin = (email, password) => {
   };
 };
 
-// TODO: implement this!
+// TODO: implement & test this!
 export const socialLogin = platform => {
   return async dispatch => {
     try {
