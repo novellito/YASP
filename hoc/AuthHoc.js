@@ -20,7 +20,6 @@ export default function(ChildComponent, loginRegister = false) {
         if (!isLoggedIn) {
           try {
             const { data } = await createGetRequest();
-            console.log(data);
             if (data) {
               const { username, id, email } = data.user;
               props.setUser({ username, id, email });
