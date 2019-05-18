@@ -6,7 +6,7 @@ import Router, { withRouter } from 'next/router';
 import axios from 'axios';
 import { Button, Form, Message } from 'semantic-ui-react';
 
-const Forms = props => {
+export const Forms = props => {
   const [emailObj, setEmail] = useState({ email: '', valid: true });
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');

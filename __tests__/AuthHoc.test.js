@@ -1,5 +1,5 @@
 import AuthHOC from '../hoc/AuthHoc';
-import { render, cleanup } from 'react-testing-library';
+import { render, cleanup, wait } from 'react-testing-library';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import Router from 'next/router';
@@ -20,13 +20,13 @@ const mockUser = {
   username: 'foobar'
 };
 
-mock.onGet('/api/user/profile').reply(200, {
-  user: mockUser
-});
-
 const TestComponent = () => <h1>Test</h1>;
 
 describe('Auth HOC Suite', () => {
+  mock.onGet('/api/user/profile').reply(200, {
+    user: mockUser
+  });
+
   let store;
   let ComponentRendered;
   beforeEach(() => {
@@ -57,6 +57,13 @@ describe('Auth HOC Suite', () => {
       <ComponentRendered store={store} router={{ asPath: '/register' }} />
     );
     expect(mockedRouter.push).toHaveBeenCalledWith('/register');
+  });
+
+  it('should redirect to /home', async () => {
+    render(<ComponentRendered store={store} router={{ asPath: '/home' }} />);
+    await wait(() => {
+      expect(mockedRouter.push).toHaveBeenCalledWith('/home');
+    });
   });
 
   it('should load the component when loginRegister is true', async () => {

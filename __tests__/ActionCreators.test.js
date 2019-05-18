@@ -7,7 +7,6 @@ import configureMockStore from 'redux-mock-store';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
-
 const mock = new MockAdapter(axios);
 
 const mockUser = {
@@ -18,13 +17,13 @@ const mockUser = {
   user: 'foobar'
 };
 
-mock.onPost('/api/local/login').reply(200, {
-  user: mockUser
-});
-
-mock.onDelete('/api/token').reply(200);
-
 describe('Action creators suite', () => {
+  mock.onDelete('/api/token').reply(200);
+
+  mock.onPost('/api/local/login').reply(200, {
+    user: mockUser
+  });
+
   let store;
   beforeEach(() => {
     store = mockStore({
