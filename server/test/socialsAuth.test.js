@@ -10,6 +10,8 @@ chai.use(chaiHTTP);
 describe('Socials Auth Suite', () => {
   it('Should call send response', done => {
     const req = httpMocks.createRequest();
+    req.app = { io: null };
+    req.app.set('io', '');
     const res = httpMocks.createResponse();
     req.body = {
       user: 'bob',

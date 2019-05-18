@@ -4,7 +4,11 @@ const controller = require('../controllers/socialAuth');
 
 const router = express.Router();
 
-router.get('/login', passport.authenticate('facebook', { scope: ['email'] }));
+router.get(
+  '/login',
+  controller.addSocketIdtoSession,
+  passport.authenticate('facebook', { scope: ['email'] })
+);
 
 router.get(
   '/callback',

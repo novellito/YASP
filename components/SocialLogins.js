@@ -5,9 +5,20 @@ const SocialLogins = props => {
   return (
     <div className="socials">
       <p className="test">or sign in with</p>
-      <Button color="facebook" circular icon="facebook" />
-      <Button color="twitter" circular icon="twitter" />
-      <Button color="grey" circular icon="github" />
+      <Button
+        onClick={() => props.login('facebook')}
+        color="facebook"
+        circular
+        icon="facebook"
+        disabled={props.disabled}
+      />
+      <Button
+        color="twitter"
+        circular
+        icon="twitter"
+        disabled={props.disabled}
+      />
+      <Button color="grey" circular icon="github" disabled={props.disabled} />
       <style jsx>{`
         .socials {
           text-align: center;

@@ -4,8 +4,11 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const helmet = require('helmet');
-
+const socketio = require('socket.io');
+const session = require('express-session');
 const app = express();
+const server = require('http').Server(app);
+const io = socketio(server);
 const PORT = 5000 || process.env.PORT;
 
 // import routes
@@ -33,7 +36,14 @@ app.use(helmet());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(passport.initialize());
-
+app.set('io', io);
+app.use(
+  session({
+    secret: process.env.SECRET_ONE,
+    resave: false,
+    saveUninitialized: true
+  })
+);
 app.use('/api/local', localAuthRoutes);
 app.use('/api/facebook', fbAuthRoutes);
 app.use('/api/twitter', twitterAuthRoutes);
@@ -48,13 +58,12 @@ app.use(
   passport.authenticate('token', { session: false }),
   tokenRoutes
 );
-
 // Error handling middleware
 app.use((err, req, res, next) => {
   res.send({ error: err.message });
 });
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`Server started on port: ${PORT}`);
 });
 
