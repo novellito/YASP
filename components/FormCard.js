@@ -1,6 +1,6 @@
 import { Card } from 'semantic-ui-react';
 
-const FormCard = props => {
+export const FormCard = props => {
   return (
     <div className="card-container">
       <Card style={{ width: '400px', padding: '20px' }}>

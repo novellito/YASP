@@ -5,7 +5,7 @@ import axios from 'axios';
 import { createGetRequest } from '../utils/index';
 import { Button } from 'semantic-ui-react';
 
-const refetchToken = async email => {
+export const refetchToken = async email => {
   try {
     const headers = {
       Authorization: `Bearer ${localStorage.getItem('refreshToken')}`,
@@ -24,7 +24,6 @@ const refetchToken = async email => {
 
 export const Home = props => {
   const [isValid, setValid] = useState(false);
-
   // The function is an example of how the client requests for a new jwt after
   // the current one expires.
   const retrieveUserInfo = async () => {
@@ -52,7 +51,9 @@ export const Home = props => {
       <h2>Your Info: </h2>
       <p>email: {props.email}</p>
       <p>id: {props.userId}</p>
-      <p>Is token valid: {isValid ? 'valid' : 'not valid'}</p>
+      <p data-testid="token-validity">
+        Is token valid: {isValid ? 'valid' : 'not valid'}
+      </p>
       <Button onClick={retrieveUserInfo}>Get My Info</Button>
       <style jsx>{`
         #home {

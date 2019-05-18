@@ -1,12 +1,30 @@
-// import React from 'react';
-// import renderer from 'react-test-renderer';
+import { render, cleanup } from 'react-testing-library';
+import { Navbar } from '../components/Navbar';
 
-// import App from '../pages/index.js';
+describe('Navbar suite', () => {
+  afterEach(() => {
+    cleanup();
+  });
 
-// describe('With Enzyme', () => {
-//   it('App shows "Hello world!"', () => {
-//     const app = shallow(<App />);
+  it('Should render the navbar with the login and register buttons when logged out', () => {
+    const { getByText } = render(<Navbar isLoggedIn={false} />);
+    const login = getByText('Login');
+    const register = getByText('Register');
 
-//     expect(app.find('p').text()).toEqual('Hello World!');
-//   });
-// });
+    expect(login).toBeTruthy();
+    expect(register).toBeTruthy();
+  });
+
+  it('Should render the navbar with the logout button when logged in', () => {
+    const { getByText } = render(<Navbar isLoggedIn={true} />);
+    const logout = getByText('Logout');
+
+    expect(logout).toBeTruthy();
+  });
+
+  it('Should should match the snapshot when logged in', () => {
+    const elem = render(<Navbar isLoggedIn={true} />);
+
+    expect(elem).toMatchSnapshot();
+  });
+});

@@ -6,7 +6,7 @@ import Link from 'next/link';
 export const Navbar = props => {
   return (
     <>
-      <Menu inverted>
+      <Menu inverted data-testid="navbar">
         <Menu.Item>
           <Link href="/">
             <Image size="mini" src="https://react.semantic-ui.com/logo.png" />

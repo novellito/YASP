@@ -1,18 +1,14 @@
-// import React from 'react'
 import AuthHOC from '../hoc/AuthHoc';
-import { render, debug, cleanup, getByTestId } from 'react-testing-library';
+import { render, cleanup } from 'react-testing-library';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-
 import Router from 'next/router';
-// const mockedRouter = { push: () => {} };
-const mockedRouter = { push: jest.fn(() => 'foo') };
-Router.router = mockedRouter;
-
 import MockAdapter from 'axios-mock-adapter';
 import axios from 'axios';
-const mock = new MockAdapter(axios);
 
+const mockedRouter = { push: jest.fn(() => 'foo') };
+Router.router = mockedRouter;
+const mock = new MockAdapter(axios);
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
