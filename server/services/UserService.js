@@ -2,20 +2,22 @@ const UserModel = require('../models/User');
 
 module.exports = new (class UserService {
   async addNewUserToDb({ email, username }, password) {
-    const existingUser = await UserModel.findOne({ email });
-    // if (existingUser) {
-    //   return {
-    //     username: existingUser.username,
-    //     email: existingUser.email,
-    //     id: existingUser._id
-    //   };
-    // }
-    if (existingUser) throw new Error('User already exists!');
-    const user = password
-      ? new UserModel({ email, username, password })
-      : new UserModel({ email, username });
+    const existingUser = await this.getUserInfo(email);
 
-    return user.save();
+    if (existingUser.message && !password) {
+      // user is registering with social for the first time
+      return new UserModel({ email, username }).save();
+    } else if (existingUser.message) {
+      // user registering locally
+      return new UserModel({ email, username, password }).save();
+    }
+
+    if (existingUser && password) {
+      throw new Error('User already exists!');
+    } else {
+      // User is logging in with social account
+      return existingUser;
+    }
   }
 
   async loginUser(email, password) {
@@ -32,6 +34,6 @@ module.exports = new (class UserService {
     const user = await UserModel.findOne({ email });
     if (!user) return { message: 'User not found' };
 
-    return { username: user.username, email: user.email, id: user._id };
+    return { username: user.username, email: user.email, _id: user._id };
   }
 })();

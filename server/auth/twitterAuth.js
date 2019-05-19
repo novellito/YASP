@@ -22,15 +22,6 @@ module.exports = (...dependencies) => {
             email: email.value,
             username
           });
-          // let user;
-          // user = await userSVC.getUserInfo(email.value);
-          // console.log(user);
-          // if (user.message) {
-          //   user = await userSVC.addNewUserToDb({
-          //     email: email.value,
-          //     username
-          //   });
-          // }
           const { token, refreshToken } = tokenSVC.generateTokens(email.value);
 
           req.body = { user, token, refreshToken };
