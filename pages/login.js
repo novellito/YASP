@@ -1,9 +1,13 @@
 import { useEffect, useState } from 'react';
 import Forms from '../components/Forms';
+import { connect } from 'react-redux';
 import FormCard from '../components/FormCard';
 import Socials from '../components/SocialLogins';
 import authenticate from '../hoc/AuthHoc';
 import io from 'socket.io-client';
+import Router, { withRouter } from 'next/router';
+import * as actionCreators from '../store/actions/actionCreators';
+import { setTokens } from '../utils/index';
 
 const BASE_URL = 'http://localhost:5000';
 const socket = io(BASE_URL);
@@ -14,6 +18,7 @@ const openSocialWindow = social => {
   }&social=${social}`;
   return window.open(url, '_blank');
 };
+
 let popup;
 export const Login = props => {
   const [areAuthsDisabled, setAuthStatus] = useState(false);
@@ -21,9 +26,11 @@ export const Login = props => {
 
   useEffect(() => {
     socket.on(selectedSocial, user => {
+      const { token, refreshToken, email, username, _id } = user;
       popup.close();
-      console.log(user);
-      // ! TODO: add redirect & jwt logic here!
+      setTokens(token, refreshToken);
+      props.setUser({ id: _id, email, username });
+      Router.push('/home');
     });
   }, [selectedSocial]);
 
@@ -58,5 +65,20 @@ export const Login = props => {
     />
   );
 };
+const mapDispatchToProps = dispatch => {
+  return {
+    setUser: user =>
+      dispatch(
+        actionCreators.setUser({
+          id: user.id,
+          email: user.email,
+          username: user.username
+        })
+      )
+  };
+};
 
-export default authenticate(Login, true);
+export default connect(
+  null,
+  mapDispatchToProps
+)(withRouter(authenticate(Login, true)));

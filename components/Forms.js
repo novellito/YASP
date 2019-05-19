@@ -89,7 +89,6 @@ export const Forms = props => {
               onChange={e => setUsername(e.target.value)}
               value={username}
             />
-            {username}
           </Form.Field>
         </>
       ) : (
@@ -161,8 +160,7 @@ const mapDispatchToProps = dispatch => {
           email: user.email,
           username: user.username
         })
-      ),
-    socialLogin: platform => dispatch(actionCreators.socialLogin(platform))
+      )
   };
 };
 

@@ -32,30 +32,6 @@ export const localLogin = (email, password) => {
   };
 };
 
-// TODO: implement & test this!
-export const socialLogin = platform => {
-  return async dispatch => {
-    try {
-      const { data } = await axios.post(`/api/${platform}/login`, {
-        email,
-        password
-      });
-      // dispatch here & set the localstorage
-      dispatch(
-        setUser({
-          id: data.user._id,
-          email: data.user.email,
-          username: data.user.username
-        })
-      );
-      //   console.log(data);
-      return data;
-    } catch (err) {
-      return err;
-    }
-  };
-};
-
 export const logout = () => {
   return async dispatch => {
     try {
