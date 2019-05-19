@@ -10,11 +10,13 @@ export const Landing = props => {
   useEffect(() => {
     const checkAuthStatus = async () => {
       try {
-        const { data } = await createGetRequest();
-        if (data) {
-          console.log(data);
-          const { username, id, email } = data.user;
-          props.setUser({ username, id, email });
+        if (localStorage.length === 2) {
+          const { data } = await createGetRequest();
+          if (data) {
+            console.log(data);
+            const { username, id, email } = data.user;
+            props.setUser({ username, id, email });
+          }
         }
       } catch (err) {
         console.log(err);

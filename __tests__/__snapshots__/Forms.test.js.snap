@@ -39,12 +39,16 @@ Object {
           <input
             class="jsx-244508578"
             name="password"
+            placeholder="password"
             type="text"
             value=""
           />
           <div
             class="jsx-244508578 subtext"
-          />
+          >
+            
+            
+          </div>
           <div
             class="jsx-244508578 subtext"
           >
@@ -108,12 +112,16 @@ Object {
         <input
           class="jsx-244508578"
           name="password"
+          placeholder="password"
           type="text"
           value=""
         />
         <div
           class="jsx-244508578 subtext"
-        />
+        >
+          
+          
+        </div>
         <div
           class="jsx-244508578 subtext"
         >

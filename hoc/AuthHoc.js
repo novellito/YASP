@@ -21,8 +21,8 @@ export default function(ChildComponent, loginRegister = false) {
           try {
             const { data } = await createGetRequest();
             if (data) {
-              const { username, id, email } = data.user;
-              props.setUser({ username, id, email });
+              const { username, _id, email } = data.user;
+              props.setUser({ username, id: _id, email });
               Router.push('/home');
             }
           } catch (err) {

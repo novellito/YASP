@@ -89,6 +89,7 @@ export const Forms = props => {
             <input
               type="text"
               name="username"
+              placeholder="username"
               onChange={e => setUsername(e.target.value)}
               value={username}
             />

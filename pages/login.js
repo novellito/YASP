@@ -32,11 +32,17 @@ export const Login = props => {
       props.setUser({ id: _id, email, username });
       Router.push('/home');
     });
-  }, [selectedSocial]);
+    return () => {
+      // on unmounting
+      setAuthStatus(false);
+      setSelectedSocial(null);
+    };
+  }, [selectedSocial, areAuthsDisabled]);
 
   const checkWindowIfClosed = () => {
     const check = setInterval(() => {
       if (!popup || popup.closed || popup.closed === undefined) {
+        console.log('unmounting!');
         clearInterval(check);
         setAuthStatus(false);
         setSelectedSocial(null);
