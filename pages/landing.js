@@ -2,14 +2,13 @@ import { useEffect } from 'react';
 import Link from 'next/link';
 import { Button } from 'semantic-ui-react';
 import { createGetRequest } from '../utils/index';
-import authenticate from '../hoc/AuthHoc';
+import loginStatus from '../hoc/LoginStatusHoc';
 import { connect } from 'react-redux';
 import * as actionCreators from '../store/actions/actionCreators';
 
 export const Landing = props => {
   useEffect(() => {
     const checkAuthStatus = async () => {
-      // if (!isLoggedIn) {
       try {
         const { data } = await createGetRequest();
         if (data) {
@@ -18,11 +17,8 @@ export const Landing = props => {
           props.setUser({ username, id, email });
         }
       } catch (err) {
-        // console.log(err);
-        // localStorage.clear();
-        // Router.push('/login');
+        console.log(err);
       }
-      // }
     };
     checkAuthStatus();
   }, []);
@@ -61,15 +57,8 @@ export const Landing = props => {
   );
 };
 
-const mapStateToProps = state => {
-  return {
-    isLoggedIn: state.login.isLoggedIn
-  };
-};
-
 const mapDispatchToProps = dispatch => {
   return {
-    logout: () => dispatch(actionCreators.logout()),
     setUser: user =>
       dispatch(
         actionCreators.setUser({
@@ -81,8 +70,7 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-// export default Landing;
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
-)(Landing);
+)(loginStatus(Landing));

@@ -1,6 +1,5 @@
 import { Image, Menu } from 'semantic-ui-react';
-import { connect } from 'react-redux';
-import * as actionCreators from '../store/actions/actionCreators';
+import loginStatus from '../hoc/LoginStatusHoc';
 import Link from 'next/link';
 
 export const Navbar = props => {
@@ -41,19 +40,4 @@ export const Navbar = props => {
   );
 };
 
-const mapStateToProps = state => {
-  return {
-    isLoggedIn: state.login.isLoggedIn
-  };
-};
-
-const mapDispatchToProps = dispatch => {
-  return {
-    logout: () => dispatch(actionCreators.logout())
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Navbar);
+export default loginStatus(Navbar);
