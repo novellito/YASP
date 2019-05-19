@@ -84,7 +84,6 @@ module.exports = (...dependencies) => {
       (token, done) => {
         try {
           // Send user to next middleware
-          console.log(token);
           return done(null, token.email);
         } catch (error) {
           return done(error);
@@ -102,7 +101,6 @@ module.exports = (...dependencies) => {
         jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken()
       },
       (token, done) => {
-        console.log(token);
         try {
           // Send user to next middleware
           return done(null, token.email);

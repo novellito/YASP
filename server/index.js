@@ -10,6 +10,12 @@ const app = express();
 const server = require('http').Server(app);
 const io = socketio(server);
 const PORT = 5000 || process.env.PORT;
+// app.use((req, res, next) => {
+//   console.log(req);
+//   console.log(req.headers);
+//   next();
+//   // res.send({ error: err.message });
+// });
 
 // import routes
 const localAuthRoutes = require('./routes/localAuth');
@@ -44,6 +50,7 @@ app.use(
     saveUninitialized: true
   })
 );
+
 app.use('/api/local', localAuthRoutes);
 app.use('/api/facebook', fbAuthRoutes);
 app.use('/api/twitter', twitterAuthRoutes);

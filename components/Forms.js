@@ -10,7 +10,8 @@ export const Forms = props => {
   const [emailObj, setEmail] = useState({ email: '', valid: true });
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [invalidCreds, setInvalidCreds] = useState(false);
+  const [invalidLogin, setInvalidLogin] = useState(false);
+  const [invalidRegister, setInvalidRegister] = useState(false);
   const currRoute = props.router.asPath;
 
   const checkEmailValidity = () => {
@@ -33,6 +34,7 @@ export const Forms = props => {
           username,
           password
         });
+        if (data.error) throw new Error(data.error);
         localStorage.setItem('jwt', data.user.token);
         localStorage.setItem('refreshToken', data.user.refreshToken);
         props.setUser({
@@ -43,6 +45,7 @@ export const Forms = props => {
         Router.push('/home');
       } catch (err) {
         console.log(err);
+        setInvalidRegister(true);
       }
     } else {
       // User is logging in
@@ -50,7 +53,7 @@ export const Forms = props => {
       if (user) {
         Router.push('/home');
       } else {
-        setInvalidCreds(true);
+        setInvalidLogin(true);
       }
     }
   };
@@ -104,9 +107,16 @@ export const Forms = props => {
           value={password}
         />
         <div className="subtext">
-          {invalidCreds ? (
+          {invalidLogin ? (
             <>
               <span style={{ color: 'red' }}>Invalid Credentials! </span>
+            </>
+          ) : (
+            ''
+          )}
+          {invalidRegister ? (
+            <>
+              <span style={{ color: 'red' }}>Credentials already in use! </span>
             </>
           ) : (
             ''
