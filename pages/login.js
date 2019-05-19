@@ -42,7 +42,6 @@ export const Login = props => {
   const checkWindowIfClosed = () => {
     const check = setInterval(() => {
       if (!popup || popup.closed || popup.closed === undefined) {
-        console.log('unmounting!');
         clearInterval(check);
         setAuthStatus(false);
         setSelectedSocial(null);
