@@ -6,6 +6,7 @@ const router = express.Router();
 
 router.get(
   '/login',
+  controller.addSocketIdtoSession,
   passport.authenticate('google', {
     scope: ['https://www.googleapis.com/auth/userinfo.email']
   })

@@ -2,6 +2,7 @@ const SocialsController = {};
 
 SocialsController.addSocketIdtoSession = (req, res, next) => {
   req.session.socketId = req.query.socketId;
+  req.session.socialType = req.query.social;
   next();
 };
 
@@ -9,8 +10,7 @@ SocialsController.sendResponse = (req, res) => {
   const { user, token, refreshToken } = req.body;
   const io = req.app.get('io');
 
-  // ! TODO: make this dynamic
-  io.in(req.session.socketId).emit('facebook', {
+  io.in(req.session.socketId).emit(req.session.socialType, {
     _id: user._id,
     email: user.email,
     username: user.username,

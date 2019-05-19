@@ -4,7 +4,11 @@ const controller = require('../controllers/socialAuth');
 
 const router = express.Router();
 
-router.get('/login', passport.authenticate('twitter'));
+router.get(
+  '/login',
+  controller.addSocketIdtoSession,
+  passport.authenticate('twitter')
+);
 
 router.get(
   '/callback',

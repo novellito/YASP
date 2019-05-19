@@ -99,6 +99,7 @@ export const Forms = props => {
         <label htmlFor="password">Password</label>
         <input
           type="text"
+          placeholder="password"
           name="password"
           onChange={e => setPassword(e.target.value)}
           value={password}

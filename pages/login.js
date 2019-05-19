@@ -5,47 +5,43 @@ import Socials from '../components/SocialLogins';
 import authenticate from '../hoc/AuthHoc';
 import io from 'socket.io-client';
 
-const socket = io('http://localhost:5000');
+const BASE_URL = 'http://localhost:5000';
+const socket = io(BASE_URL);
 
-const openPopup = social => {
-  const width = 600;
-  const height = 600;
-  const left = window.innerWidth / 2 - width / 2;
-  const top = window.innerHeight / 2 - height / 2;
-  const url = `http://localhost:5000/api/${social}/login?socketId=${socket.id}`;
-  return window.open(
-    url,
-    '',
-    `toolbar=no, location=no, directories=no, status=no, menubar=no,
-    scrollbars=no, resizable=no, copyhistory=no, width=${width},
-    height=${height}, top=${top}, left=${left}`
-  );
+const openSocialWindow = social => {
+  const url = `${BASE_URL}/api/${social}/login?socketId=${
+    socket.id
+  }&social=${social}`;
+  return window.open(url, '_blank');
 };
+let popup;
 export const Login = props => {
-  let popup;
   const [areAuthsDisabled, setAuthStatus] = useState(false);
+  const [selectedSocial, setSelectedSocial] = useState(null);
+
   useEffect(() => {
-    // ! TODO: make this dynamic!
-    socket.on('facebook', user => {
-      this.popup.close();
+    socket.on(selectedSocial, user => {
+      popup.close();
       console.log(user);
       // ! TODO: add redirect & jwt logic here!
     });
-  }, []);
+  }, [selectedSocial]);
 
-  const checkPopup = () => {
+  const checkWindowIfClosed = () => {
     const check = setInterval(() => {
       if (!popup || popup.closed || popup.closed === undefined) {
         clearInterval(check);
         setAuthStatus(false);
+        setSelectedSocial(null);
       }
     }, 1000);
   };
 
   const startAuth = social => {
     if (!areAuthsDisabled) {
-      popup = openPopup(social);
-      checkPopup();
+      setSelectedSocial(social);
+      popup = openSocialWindow(social);
+      checkWindowIfClosed();
       setAuthStatus(true);
     }
   };
