@@ -9,9 +9,15 @@ chai.use(chaiHTTP);
 
 describe('Socials Auth Suite', () => {
   it('Should call send response', done => {
-    const req = httpMocks.createRequest();
-    req.app = { io: null };
-    req.app.set('io', '');
+    const req = httpMocks.createRequest({ session: { socketId: '123' } });
+    req.app = {
+      get: () => ({
+        in: () => ({
+          emit: sinon.fake()
+        })
+      })
+    };
+    req.session.socketId = '123';
     const res = httpMocks.createResponse();
     req.body = {
       user: 'bob',
