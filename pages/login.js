@@ -10,7 +10,6 @@ import * as actionCreators from '../store/actions/actionCreators';
 import { setTokens } from '../utils/index';
 
 const BASE_URL = 'http://localhost:5000';
-const socket = io(BASE_URL);
 
 const openSocialWindow = social => {
   const url = `${BASE_URL}/api/${social}/login?socketId=${
@@ -25,6 +24,8 @@ export const Login = props => {
   const [selectedSocial, setSelectedSocial] = useState(null);
 
   useEffect(() => {
+    const socket = io(BASE_URL);
+
     socket.on(selectedSocial, user => {
       const { token, refreshToken, email, username, _id } = user;
       popup.close();
