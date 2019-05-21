@@ -8,6 +8,7 @@ services:
       - '3000:3000'
     volumes:
       - /app/node_modules/
+      - /app/build/
       - .:/app
     links:
       - server
@@ -15,11 +16,9 @@ services:
     image: server/yasp:v1
     build:
       context: ./server
-      # context: . #server
     restart: always
     volumes:
       - /app/node_modules
-      # - .:/app
       - ./server:/app
     ports:
       - '5000:5000'

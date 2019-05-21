@@ -6,8 +6,8 @@
   "scripts": {
     "build": "next build",
     "dev": "nodemon index.js",
-    "test": "jest --testPathIgnorePatterns server --watch",
-    "prod": "NODE_ENV=production node index.js"
+    "start": "NODE_ENV=production node index.js",
+    "test": "jest --testPathIgnorePatterns server --watch"
   },
   "author": "Christian Trinidad",
   "license": "ISC",

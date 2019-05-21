@@ -9,8 +9,7 @@ import Router, { withRouter } from 'next/router';
 import * as actionCreators from '../store/actions/actionCreators';
 import { setTokens } from '../utils/index';
 
-const BASE_URL = 'server';
-// const BASE_URL = 'http://localhost:5000';
+const BASE_URL = 'http://localhost:5000';
 
 let popup;
 export const Login = props => {

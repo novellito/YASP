@@ -1,6 +1,7 @@
 const express = require('express');
 const next = require('next');
 
+// !todo setup proxies for docker!
 const PORT = 3000;
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
