@@ -3,8 +3,8 @@ const redis = require('redis');
 
 module.exports = new (class TokenService {
   constructor() {
-    // this.client = redis.createClient(6379, 'redis');
-    this.client = redis.createClient();
+    this.client = redis.createClient(6379, 'redis');
+    // this.client = redis.createClient();
     this.client.on('connect', function() {
       console.log('Connected to Redis..');
     });

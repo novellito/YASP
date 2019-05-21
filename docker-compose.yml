@@ -1,33 +1,33 @@
 version: '3'
 services:
+  client:
+    image: client/yasp:v1
+    build: .
+    restart: always
+    ports:
+      - '3000:3000'
+    volumes:
+      - /app/node_modules/
+      - .:/app
+    links:
+      - server
   server:
     image: server/yasp:v1
     build:
-      context: . #server
+      context: ./server
+      # context: . #server
     restart: always
     volumes:
       - /app/node_modules
-      - .:/app
-      # - ./server:/app
+      # - .:/app
+      - ./server:/app
     ports:
       - '5000:5000'
     links:
       - mongo
       - redis
     env_file:
-      - .env
-  # tests:
-  #   build:
-  #     dockerfile: Dockerfile
-  #     context: . #server
-  #   volumes:
-  #     - /app/node_modules
-  #     - .:/app
-  #     - ./server:/app
-  #   links:
-  #     - mongo
-  #     - redis
-  #   command: ['npm', 'run', 'test-watch']
+      - ./server/.env
   mongo:
     container_name: mongo
     image: mongo:latest

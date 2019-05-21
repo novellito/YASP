@@ -7,7 +7,7 @@
     "build": "next build",
     "dev": "nodemon index.js",
     "test": "jest --testPathIgnorePatterns server --watch",
-    "test:debug": "node --inspect-brk node_modules/.bin/jest --runInBand --watch --testPathIgnorePatterns server"
+    "prod": "NODE_ENV=production node index.js"
   },
   "author": "Christian Trinidad",
   "license": "ISC",

@@ -9,23 +9,16 @@ import Router, { withRouter } from 'next/router';
 import * as actionCreators from '../store/actions/actionCreators';
 import { setTokens } from '../utils/index';
 
-const BASE_URL = 'http://localhost:5000';
-
-const openSocialWindow = social => {
-  const url = `${BASE_URL}/api/${social}/login?socketId=${
-    socket.id
-  }&social=${social}`;
-  return window.open(url, '_blank');
-};
+const BASE_URL = 'server';
+// const BASE_URL = 'http://localhost:5000';
 
 let popup;
 export const Login = props => {
   const [areAuthsDisabled, setAuthStatus] = useState(false);
   const [selectedSocial, setSelectedSocial] = useState(null);
+  const [socket] = useState(io(BASE_URL));
 
   useEffect(() => {
-    const socket = io(BASE_URL);
-
     socket.on(selectedSocial, user => {
       const { token, refreshToken, email, username, _id } = user;
       popup.close();
@@ -39,6 +32,13 @@ export const Login = props => {
       setSelectedSocial(null);
     };
   }, [selectedSocial, areAuthsDisabled]);
+
+  const openSocialWindow = social => {
+    const url = `${BASE_URL}/api/${social}/login?socketId=${
+      socket.id
+    }&social=${social}`;
+    return window.open(url, '_blank');
+  };
 
   const checkWindowIfClosed = () => {
     const check = setInterval(() => {
