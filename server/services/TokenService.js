@@ -3,7 +3,7 @@ const redis = require('redis');
 
 module.exports = new (class TokenService {
   constructor() {
-    this.client = redis.createClient(6379, process.env.REDIS || null);
+    this.client = redis.createClient(process.env.REDIS || null);
     this.client.on('connect', function() {
       console.log(
         process.env.REDIS
