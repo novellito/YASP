@@ -3,10 +3,13 @@ const redis = require('redis');
 
 module.exports = new (class TokenService {
   constructor() {
-    this.client = redis.createClient(6379, 'redis');
-    // this.client = redis.createClient();
+    this.client = redis.createClient(6379, process.env.REDIS || null);
     this.client.on('connect', function() {
-      console.log('Connected to Redis..');
+      console.log(
+        process.env.REDIS
+          ? 'Connected to Prod Redis!'
+          : 'Connected to Local Redis!'
+      );
     });
     this.generateTokens = this.generateTokens.bind(this);
     this.deleteTokenRecord = this.deleteTokenRecord.bind(this);
@@ -17,9 +20,7 @@ module.exports = new (class TokenService {
       expiresIn: '30m'
       // expiresIn: '5s'
     });
-    // const token = jwt.sign({ email }, process.env.SECRET_ONE, { expiresIn: '30m' });
     const refreshToken = jwt.sign({ email }, process.env.SECRET_TWO);
-
     this.client.hmset(refreshToken, ['email', email, 'jwt', token]);
     return { token, refreshToken };
   }

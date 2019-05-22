@@ -21,10 +21,16 @@ const tokenRoutes = require('./routes/tokenRoutes');
 
 mongoose.Promise = global.Promise;
 mongoose.connect(
-  'mongodb://mongo:27017/passport-jwt',
-  // 'mongodb://localhost:27017/passport-jwt',
+  process.env.MONGO || 'mongodb://localhost:27017/passport-jwt',
   { useNewUrlParser: true, useCreateIndex: true },
-  err => (err ? console.log(err) : console.log('Connected to DB!'))
+  err =>
+    err
+      ? console.log(err)
+      : console.log(
+          process.env.MONGO
+            ? 'Connected to Prod Mongo!'
+            : 'Connected to Local Mongo!'
+        )
 );
 
 require('./auth/localAuth')(passport);

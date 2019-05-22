@@ -1,8 +1,7 @@
 const express = require('express');
 const next = require('next');
 
-// !todo setup proxies for docker!
-const PORT = 3000;
+const PORT = 3000 || process.env.PORT;
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 
@@ -16,14 +15,24 @@ const devProxy = {
   }
 };
 
+const prodProxy = {
+  '/api': {
+    target: 'http://localhost:5000/api', // Put heroku server URL here
+    pathRewrite: { '^/api': '/' },
+    changeOrigin: true
+  }
+};
+
 app
   .prepare()
   .then(() => {
     const server = express();
 
+    const proxyMiddleware = require('http-proxy-middleware');
     if (dev && devProxy) {
-      const proxyMiddleware = require('http-proxy-middleware');
       server.use(proxyMiddleware('/api', devProxy['/api']));
+    } else {
+      server.use(proxyMiddleware('/api', prodProxy['/api']));
     }
 
     // Default catch-all handler to allow Next.js to handle all other routes

@@ -39,7 +39,11 @@ Support for the following authentication strategies using [passport.js](http://w
 
 📁 Store - Store & Reducer logic
 
+📁 HOC - Higher Order Components
+
 📁 Tests - Client side tests
+
+📁 Utils - Client side util functions
 
 ## Server 📁
 
@@ -96,4 +100,67 @@ Client Tests - `npm test`
 
 Server Tests - `npm test` or `npm run test-watch`
 
-## Deployment (Coming soon!)
+## Deployment
+
+Clone the repo and create a .env file with the following content. You will need to register onto the various platforms and create your credentials.
+
+Note: You will need to have [Docker](https://www.docker.com/) set up on your machine to do this deployment.
+
+```
+FACEBOOK_CLIENT_SECRET=YOUR_INFO
+FACEBOOK_CLIENT_ID=YOUR_INFO
+TWITTER_SECRET=YOUR_INFO
+TWITTER_KEY=YOUR_INFO
+GOOGLE_CONSUMER_KEY=YOUR_INFO
+GOOGLE_CONSUMER_SECRET=YOUR_INFO
+SECRET_ONE=YOUR_INFO
+SECRET_TWO=YOUR_INFO
+MONGO=YOUR_INFO
+REDIS=YOUR_INFO
+```
+
+[Heroku](https://www.heroku.com/) is my platform of choice as it is very quick and easy to set up!
+
+If you do not have an account go ahead and register for a free deployment!
+
+Since this app consists of the client and server you will need to create two apps.
+
+## Server
+
+- Create an app for the server
+
+- After creating an app go into the resources tab and under **Add-ons** select mLab MongoDB and Heroku Redis.
+
+- Go ahead into the mLab site and click the **Users** tab. Add a new database user & remember the credentials as this will be used soon!
+
+- There should be a section that has a URI similar to `mongodb://<dbuser>:<dbpassword>@something.mlab.com:1234/heroku_12133`. You will want to add this to the `MONGO` variable in your .env file (make sure to put in your dbuser and dbpassword).
+
+- Now go back to your Heroku resources and go the the Heroku Redis page. Click on the **View Credentials** button and copy the URI into the `REDIS` env variable. (it should look similar to `redis://h:somelongstring@ec2-3-123-456-789.compute-1.amazonaws.com:12345`)
+
+- Go into the server directory (`cd server`) and run the following commands:
+
+```
+heroku login
+
+heroku container:login
+
+heroku container:push web
+
+heroku container:release web
+```
+
+- Make note of the url that the server is hosted on as we will be placing this in various places in the client app.
+
+## Client
+
+- Copy the server url substitute the `BASE_URL` variable in login.js. Go into `index.js` and place the url into the `target` property of the `prodProxy` variable.
+
+- Create an app for the client
+
+- Now from the client directory (`cd ..`) run the same commands as before:
+
+```
+heroku container:push web
+
+heroku container:release web
+```
