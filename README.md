@@ -102,9 +102,9 @@ Server Tests - `npm test` or `npm run test-watch`
 
 ## Deployment
 
-Clone the repo and create a .env file with the following content. You will need to register onto the various platforms and create your credentials.
-
 Note: You will need to have [Docker](https://www.docker.com/) set up on your machine to do this deployment.
+
+Clone the repo and create a .env file at the root level with the following content.
 
 ```
 FACEBOOK_CLIENT_SECRET=YOUR_INFO
@@ -118,6 +118,8 @@ SECRET_TWO=YOUR_INFO
 MONGO=YOUR_INFO
 REDIS=YOUR_INFO
 ```
+
+You will need to register onto the various platforms and create your credentials.
 
 [Heroku](https://www.heroku.com/) is my platform of choice as it is very quick and easy to set up!
 
