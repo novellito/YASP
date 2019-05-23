@@ -170,3 +170,5 @@ heroku container:push web
 
 heroku container:release web
 ```
+
+**NOTE: That in order to use Facebook Authentication for deployment, you will need to set up https for your site.**
