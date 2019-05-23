@@ -1,7 +1,7 @@
 const express = require('express');
 const next = require('next');
 
-const PORT = 3000 || process.env.PORT;
+const PORT = process.env.PORT || 3000;
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 
@@ -17,7 +17,7 @@ const devProxy = {
 
 const prodProxy = {
   '/api': {
-    target: 'http://localhost:5000/api', // Put heroku server URL here
+    target: 'https://yasp-server.herokuapp.com/api', // Put heroku server URL here
     pathRewrite: { '^/api': '/' },
     changeOrigin: true
   }

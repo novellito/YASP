@@ -9,7 +9,7 @@ const session = require('express-session');
 const app = express();
 const server = require('http').Server(app);
 const io = socketio(server);
-const PORT = 5000 || process.env.PORT;
+const PORT = process.env.PORT || 5000;
 
 // import routes
 const localAuthRoutes = require('./routes/localAuth');
@@ -21,7 +21,9 @@ const tokenRoutes = require('./routes/tokenRoutes');
 
 mongoose.Promise = global.Promise;
 mongoose.connect(
-  process.env.MONGO || 'mongodb://localhost:27017/passport-jwt',
+  process.env.MONGO_URL ||
+    process.env.DOCKER_MONGO ||
+    'mongodb://localhost:27017/yasp-server',
   { useNewUrlParser: true, useCreateIndex: true },
   err =>
     err

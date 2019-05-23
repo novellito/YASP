@@ -10,6 +10,8 @@ import * as actionCreators from '../store/actions/actionCreators';
 import { setTokens } from '../utils/index';
 
 const BASE_URL = 'http://localhost:5000';
+// Put heroku server URL here
+// const BASE_URL = 'https://yasp-server.herokuapp.com';
 
 let popup;
 export const Login = props => {

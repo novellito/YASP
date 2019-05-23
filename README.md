@@ -76,7 +76,26 @@ Support for the following authentication strategies using [passport.js](http://w
 
 Clone the repo & run `npm install` at the root directory and in the server directory.
 
-## Via local
+Create a .env file in the server directory with the following content.
+
+```
+FACEBOOK_CLIENT_SECRET=YOUR_INFO
+FACEBOOK_CLIENT_ID=YOUR_INFO
+TWITTER_SECRET=YOUR_INFO
+TWITTER_KEY=YOUR_INFO
+GOOGLE_CONSUMER_KEY=YOUR_INFO
+GOOGLE_CONSUMER_SECRET=YOUR_INFO
+SECRET_ONE=YOUR_INFO
+SECRET_TWO=YOUR_INFO
+MONGO_URL=YOUR_INFO - used for deployment - comment this out during development
+REDIS_URL=YOUR_INFO - used for deployment - comment this out during development
+DOCKER_MONGO=mongodb://mongo/yasp-server - Use only if you want to use docker-compose file
+DOCKER_REDIS=redis://redis:6379 - Use only if you want to use docker-compose file
+```
+
+You will need to register onto the various platforms and create your credentials as well as configure the proper callback urls.
+
+## Via Local
 
 You will need to have redis and mongodb running locally.
 
@@ -84,11 +103,11 @@ After those are up and running, run the commands:
 
 From the server directory you can use either `nodemon` or `npm run server`
 
-From the server directory you can use either `nodemon` or `npm run dev`
+From the root directory you can use either `nodemon` or `npm run dev`
 
 To run tests, run `npm run test-watch`
 
-## Via Docker
+## Via Docker Local
 
 You will need to have Docker set up.
 
@@ -104,23 +123,6 @@ Server Tests - `npm test` or `npm run test-watch`
 
 Note: You will need to have [Docker](https://www.docker.com/) set up on your machine to do this deployment.
 
-Clone the repo and create a .env file at the root level with the following content.
-
-```
-FACEBOOK_CLIENT_SECRET=YOUR_INFO
-FACEBOOK_CLIENT_ID=YOUR_INFO
-TWITTER_SECRET=YOUR_INFO
-TWITTER_KEY=YOUR_INFO
-GOOGLE_CONSUMER_KEY=YOUR_INFO
-GOOGLE_CONSUMER_SECRET=YOUR_INFO
-SECRET_ONE=YOUR_INFO
-SECRET_TWO=YOUR_INFO
-MONGO=YOUR_INFO
-REDIS=YOUR_INFO
-```
-
-You will need to register onto the various platforms and create your credentials.
-
 [Heroku](https://www.heroku.com/) is my platform of choice as it is very quick and easy to set up!
 
 If you do not have an account go ahead and register for a free deployment!
@@ -135,9 +137,11 @@ Since this app consists of the client and server you will need to create two app
 
 - Go ahead into the mLab site and click the **Users** tab. Add a new database user & remember the credentials as this will be used soon!
 
-- There should be a section that has a URI similar to `mongodb://<dbuser>:<dbpassword>@something.mlab.com:1234/heroku_12133`. You will want to add this to the `MONGO` variable in your .env file (make sure to put in your dbuser and dbpassword).
+- There should be a section that has a URI similar to `mongodb://<dbuser>:<dbpassword>@something.mlab.com:1234/heroku_12133`. You will want to add this to the `MONGO_URL` variable in your .env file (make sure to put in your dbuser and dbpassword).
 
-- Now go back to your Heroku resources and go the the Heroku Redis page. Click on the **View Credentials** button and copy the URI into the `REDIS` env variable. (it should look similar to `redis://h:somelongstring@ec2-3-123-456-789.compute-1.amazonaws.com:12345`)
+- Now go back to your Heroku resources and go the the Heroku Redis page. Click on the **View Credentials** button and copy the URI into the `REDIS_URL` env variable. (it should look similar to `redis://h:somelongstring@ec2-3-123-456-789.compute-1.amazonaws.com:12345`)
+
+- Go to the settings section of the Heroku dashboard and add all of the environment variables you have in your .env file into the **config vars** section.
 
 - Go into the server directory (`cd server`) and run the following commands:
 
