@@ -150,25 +150,25 @@ heroku login
 
 heroku container:login
 
-heroku container:push web
+heroku container:push web -a your-app-name
 
-heroku container:release web
+heroku container:release web -a your-app-name
 ```
 
 - Make note of the url that the server is hosted on as we will be placing this in various places in the client app.
 
 ## Client
 
-- Copy the server url substitute the `BASE_URL` variable in login.js. Go into `index.js` and place the url into the `target` property of the `prodProxy` variable.
+- Copy the server url and substitute the `BASE_URL` variable in login.js. Go into `index.js` and place the server url into the `target` property of the `prodProxy` variable.
 
 - Create an app for the client
 
 - Now from the client directory (`cd ..`) run the same commands as before:
 
 ```
-heroku container:push web
+heroku container:push web -a your-app-name
 
-heroku container:release web
+heroku container:release web -a your-app-name
 ```
 
 **NOTE: That in order to use Facebook Authentication for deployment, you will need to set up https for your site.**

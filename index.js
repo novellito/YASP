@@ -17,7 +17,7 @@ const devProxy = {
 
 const prodProxy = {
   '/api': {
-    target: 'https://yasp-server.herokuapp.com/api', // Put heroku server URL here
+    target: '/api', // Put heroku server URL before /api
     pathRewrite: { '^/api': '/' },
     changeOrigin: true
   }
